@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html data-ng-app='mainApp'>
+
+<head>
+	<title>Przychodnia</title>
+</head>
+<body>
+	<a ng-href="#/addPost">Add Customer</a>
+	<a ng-href="#/deletePost">Delete Customer</a>
+
+    <div data-ng-view=""></div>
+	<div data-ng-controller='NamesController'>
+		Name:
+		<br />
+		<input type="text" data-ng-model="nameText"/>
+		<br />
+		<ul>
+			<li data-ng-repeat="cust in customers | filter:nameText">
+				{{cust.name}} -  {{cust.city}}
+			</li>
+		</ul>
+	</div>
+	<script language="javascript" type="text/javascript" src="javascripts/angular.min.js"></script>
+	<script language="javascript" type="text/javascript" src="javascripts/angular-route.min.js"></script>
+	<script language="javascript" type="text/javascript" src="javascripts/mainmodule.js"></script>
+</body>
