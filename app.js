@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
-
+var fs = require('fs');
 var routes = require('./routes/index');
 
 var app = express();
@@ -16,7 +16,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
-mongoose.connect('mongodb://55.55.55.5/mongo');
+mongoose.connect('mongodb://55.55.55.5/test');
+
+fs.readdirSync(__dirname + "/models").forEach(function(filename){
+
+    if(~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
+});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
