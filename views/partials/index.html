@@ -1,0 +1,15 @@
+<div class="container" ng-controller="Customers">
+<a ng-href="/addPost">Add Customer</a>
+	<div>
+		Name:
+		<br />
+		<input type="text" data-ng-model="nameText"/>
+		<br />
+		<ul>
+			<li data-ng-repeat="cust in customers | filter:nameText">
+			{{cust.name}} - {{cust.city}}
+			<a ng-href="/deletePost/{{cust.name}}">Delete Customer</a>
+			</li>
+		</ul>
+	</div>
+</div>

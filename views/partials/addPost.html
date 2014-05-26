@@ -1,14 +1,14 @@
-<div class="container">
+<div class="container" ng-controller="AddCustomer">
 	<h2>Add Customer</h2>
 
-	<a href="#/">Back</a>
+	<a href="/">Back</a>
 	Name:
 	<br />
-	<input type="text" data-ng-model="newCustomer.name"/>
+	<input type="text" data-ng-model="form.name" name="name"/>
 	<br />
 	City:
 	<br />
-	<input type="text" data-ng-model="newCustomer.city"/>
+	<input type="text" data-ng-model="form.city" name="city"/>
 	<br />
-	<button data-ng-click="addCustomer()">Add Customer</button>
+	<button data-ng-click="submitCustomer()">Add Customer</button>
 </div>

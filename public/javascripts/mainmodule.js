@@ -1,49 +1,26 @@
-var mainApp = angular.module('mainApp',['ngRoute']);
+'use strict';
 
-mainApp.config(function ($routeProvider){
+angular.module('mainApp',['ngRoute']).
+config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$routeProvider
+		.when('/',
+			{
+				controller: Customers,
+				templateUrl: 'partials/index.html'
+			})
 		.when('/addPost',
 			{
-				controller: 'NamesController',
+				controller: AddCustomer,
 				templateUrl: 'partials/addPost.html'
 			})
-		.when('/deletePost',
+		.when('/deletePost/:id',
 			{
-				controller: 'NamesController',
-				templateUrl: 'partials/deletePost.html'
+				controller: DeleteCustomer,
+				templateUrl: '../partials/deletePost.html'
 			})
-		.otherwise({ redirectTo: '/'});
-});
-
-mainApp.factory('customersFactory', function(){
-	
-	var factory = {};
-	var customers = [
-		{name: 'Jacek', city: 'Sikora' },
-		{name: 'Piotr', city: 'Sikora' }
-	];
-
-	factory.getCustomers = function () {
-		return customers;
-	};
-
-	return factory;
-});
-
-mainApp.controller('NamesController', function($scope,customersFactory){
-	
-	$scope.customers = [];
-
-	init();
-
-	function init(){
-			
-		$scope.customers = customersFactory.getCustomers();
-	}
-
-	$scope.addCustomer = function(){
-		$scope.customer.push(
-			{name: $scope.newCustomer.name, city:$scope.newCustomer.city}
-		);
-	};
-});
+		.otherwise(
+			{ 
+				redirectTo: '/'
+			});
+		$locationProvider.html5Mode(true);
+}]);

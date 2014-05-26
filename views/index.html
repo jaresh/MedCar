@@ -6,22 +6,23 @@
 	<title>Przychodnia</title>
 </head>
 <body>
-	<a ng-href="#/addPost">Add Customer</a>
-	<a ng-href="#/deletePost">Delete Customer</a>
-
     <div data-ng-view=""></div>
-	<div data-ng-controller='NamesController'>
-		Name:
-		<br />
-		<input type="text" data-ng-model="nameText"/>
-		<br />
-		<ul>
-			<li data-ng-repeat="cust in customers | filter:nameText">
-				{{cust.name}} -  {{cust.city}}
-			</li>
-		</ul>
-	</div>
-	<script language="javascript" type="text/javascript" src="javascripts/angular.min.js"></script>
-	<script language="javascript" type="text/javascript" src="javascripts/angular-route.min.js"></script>
+
+    <form action="/login" method="post">
+		<div class="form-group">
+			<label>Email</label>
+			<input type="text" class="form-control" name="email">
+		</div>
+		<div class="form-group">
+			<label>Password</label>
+			<input type="password" class="form-control" name="password">
+		</div>
+
+		<button type="submit" class="btn btn-warning btn-lg">Login</button>
+	</form>
+    
+	<script language="javascript" type="text/javascript" src="javascripts/lib/angular.min.js"></script>
+	<script language="javascript" type="text/javascript" src="javascripts/lib/angular-route.min.js"></script>
 	<script language="javascript" type="text/javascript" src="javascripts/mainmodule.js"></script>
+	<script language="javascript" type="text/javascript" src="javascripts/controllers.js"></script>
 </body>
