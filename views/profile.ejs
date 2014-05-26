@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+		<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+<body>
+<div>
+
+<div class="container">
+
+	<div>
+		<h1> Profile Page</h1>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<div>
+
+		<% if (user.local.email) { %>
+		<p>
+			<strong>id</strong>: <%= user._id %><br>
+			<strong>email</strong>: <%= user.local.email %><br>
+			<strong>password</strong>: <%= user.local.password %>
+		</p>
+		<% } %>
+	 	</div>
+</div>
+</body>
+</html>
