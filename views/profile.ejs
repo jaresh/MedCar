@@ -15,11 +15,12 @@
 
 	<div>
 
-		<% if (user.local.email) { %>
+		<% if (user.login) { %>
 		<p>
 			<strong>id</strong>: <%= user._id %><br>
-			<strong>email</strong>: <%= user.local.email %><br>
-			<strong>password</strong>: <%= user.local.password %>
+			<strong>email</strong>: <%= user.login %><br>
+			<strong>password</strong>: <%= user.password %><br>
+			<strong>account type</strong>: <%= user.type %>
 		</p>
 		<% } %>
 	 	</div>

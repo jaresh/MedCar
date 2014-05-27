@@ -1,13 +1,24 @@
 module.exports = function(app, passport) {
 
 	app.get('/', function(req, res) {
-		res.render('index.ejs');
+		if(req.user)
+		{
+			if (req.user.type == 'user') 
+        		res.render('index.ejs');
+
+    		else if (req.user.type == 'admin')
+         		res.render('admin.ejs');
+		}
+    	else 
+         	res.redirect('/login');
+
 	});
 
-	app.get('/profile', isLoggedIn, function(req, res) {
-		res.render('profile', {
-			user : req.user
-		});
+	app.get('/profile', function(req, res) {
+		if(req.user)
+			res.render('profile', { user: req.user});
+		else
+			res.redirect("/login");
 	});
 
 	app.get('/logout', function(req, res) {
@@ -17,27 +28,26 @@ module.exports = function(app, passport) {
 
 //== Login
 
-		app.get('/login', function(req, res) {
+	app.get('/login', function(req, res) {
+		if(req.user)
+			res.redirect('/');
+		else
 			res.render('login.ejs', { message: req.flash('loginMessage') });
-		});
+	});
 
-		app.post('/login', passport.authenticate('local-login', {
-			successRedirect : '/profile',
-			failureRedirect : '/login', 
-			failureFlash : true 
-		}));
+	app.post('/login', passport.authenticate('local-login', {
+		successRedirect : '/',
+		failureRedirect : '/login', 
+		failureFlash : true 
+	}));
 
-//== Signup
+	app.get('*', function(req, res){
+		if(req.user)
+			res.redirect('/');
+		else
+			res.render('login.ejs', { message: req.flash('loginMessage') });
+	});
 
-		app.get('/signup', function(req, res) {
-			res.render('signup.ejs', { message: req.flash('signupMessage') });
-		});
-
-		app.post('/signup', passport.authenticate('local-signup', {
-			successRedirect : '/profile', 
-			failureRedirect : '/signup', 
-			failureFlash : true 
-		}));
 };
 
 function isLoggedIn(req, res, next) {

@@ -17,18 +17,18 @@ module.exports = function(passport) {
 // == Login ==
     passport.use('local-login', new LocalStrategy({
 
-        usernameField : 'email',
+        usernameField : 'login',
         passwordField : 'password',
         passReqToCallback : true 
     },
-    function(req, email, password, done) 
+    function(req, login, password, done) 
     {
-        if (email)
-            email = email.toLowerCase(); 
+        if (login)
+            login = login.toLowerCase(); 
 
         process.nextTick(function() 
         {
-            User.findOne({ 'local.email' :  email }, function(err, user) 
+            User.findOne({ 'login' :  login }, function(err, user) 
             {
 
                 if (err)
@@ -43,59 +43,6 @@ module.exports = function(passport) {
                 else
                     return done(null, user);
             });
-        });
-
-    }));
-
-//== Sign up ==
-    passport.use('local-signup', new LocalStrategy({
-
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true 
-    },
-    function(req, email, password, done) {
-        if (email)
-            email = email.toLowerCase(); 
-        // asynchronous
-        process.nextTick(function() {
-            if (!req.user) 
-            {
-                User.findOne({ 'local.email' :  email }, function(err, user) 
-                {
-                    if (err)
-                        return done(err);
-
-                    // check to see if theres already a user with that email
-                    if (user) 
-                    {
-                        return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-                    } 
-
-                    else 
-                    {
-
-                        var newUser = new User();
-
-                        newUser.local.email = email;
-                        newUser.local.password = newUser.generateHash(password);
-
-                        newUser.save(function(err) {
-                            if (err)
-                                throw err;
-
-                            return done(null, newUser);
-                        });
-                    }
-
-                });
-
-            }  
-            else 
-            {
-                return done(null, req.user);
-            }
-
         });
 
     }));
