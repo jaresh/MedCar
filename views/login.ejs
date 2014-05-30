@@ -9,12 +9,22 @@
 
 		<h2>Logowanie </h2>
 
-		<form action="/login" method="post">
-			<div>
+		<form action="/login" method="post" id="loginformaction">
+
+			<div style="margin-bottom:20px;">
+				<label>Kim jesteś?? </label>
+				<br>
+				<select name="accounttype" id="accountselect">
+ 					<option value="user">Pacjent</option>
+					<option value="doc">Lekarz</option>
+					<option value="admin">Administrator</option>
+				</select>
+			</div>
+			<div style="margin-bottom:20px;">
 				<label>Nazwa użytkownika</label>
 				<input type="text" name="login">
 			</div>
-			<div>
+			<div style="margin-bottom:20px;">
 				<label>Hasło</label>
 				<br>
 				<input type="password" name="password">

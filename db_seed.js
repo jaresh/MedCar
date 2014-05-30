@@ -58,22 +58,27 @@ newDoc.login = 'doc';
 newDoc.password = newDoc.generateHash('test');
 newDoc.type = 'doc';
 newDoc.specialty = 'Urolog';
+newDoc.notworkingdays = '2-4-6-7';
+newDoc.workinghours = '12-16';
 
 newDoc.save(function(err) {
 	if (err)
 		throw err;
 });
 
-User.find(function(err, user) 
-{
-    if (err)
-        return done(err);
-    if (user) 
-    {
-        user.forEach(function(entry) {
-    		console.log(entry);
-		});
-    } 
+//Doc 2
+var newDoc = new Doc();
+
+newDoc.login = 'doc2';
+newDoc.password = newDoc.generateHash('test');
+newDoc.type = 'doc';
+newDoc.specialty = 'Pulmonolog';
+newDoc.notworkingdays = '6-7';
+newDoc.workinghours = '10-18';
+
+newDoc.save(function(err) {
+	if (err)
+		throw err;
 });
 
 console.log("Added db sample data.");

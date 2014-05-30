@@ -37,6 +37,15 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function(err, req, res, next){
+
+  	if(req.user)
+		res.redirect('/');
+	else
+		res.render('login.ejs', { message: req.flash('loginMessage') });
+	
+});
+
 require('./app/routes.js')(app, passport); 
 
 app.listen(port);

@@ -1,10 +1,11 @@
 module.exports = function(app, passport) {
 
+//== Main pages 
+
 	app.get('/', function(req, res) {
+		console.log(req.user);
 		if(req.user)
-		{
 			res.render('index', { user: req.user });
-		}
     	else 
          	res.redirect('/login');
 
@@ -18,22 +19,31 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/docpanel', function(req, res) {
-		if(req.user.type == "doc")
-			res.render('docpanel', { user: req.user });
+		if(req.user)
+		{
+			if(req.user.type == "doc")
+				res.render('docpanel', { user: req.user });
+		}
 		else
 			res.redirect("/");
 	});
 
 	app.get('/adminpanel', function(req, res) {
-		if(req.user.type == "admin")
-			res.render('adminpanel', { user: req.user });
+		if(req.user)
+		{
+			if(req.user.type == "admin")
+				res.render('adminpanel', { user: req.user });
+		}
 		else
 			res.redirect("/");
 	});
 
 	app.get('/patientpanel', function(req, res) {
-		if(req.user.type == "user")
+		if(req.user)
+		{
+			if(req.user.type == "user")
 			res.render('patientpanel', { user: req.user });
+		}
 		else
 			res.redirect("/");
 	});
@@ -57,6 +67,20 @@ module.exports = function(app, passport) {
 		failureRedirect : '/login', 
 		failureFlash : true 
 	}));
+	
+	app.post('/loginadmin', passport.authenticate('admin-login', {
+		successRedirect : '/',
+		failureRedirect : '/login', 
+		failureFlash : true 
+	}));
+
+	app.post('/logindoc', passport.authenticate('doc-login', {
+		successRedirect : '/',
+		failureRedirect : '/login', 
+		failureFlash : true 
+	}));
+
+//== Other pages
 
 	app.get('*', function(req, res){
 		if(req.user)
