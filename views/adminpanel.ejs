@@ -3,20 +3,18 @@
 <% include partials/header %>   
 <body>
 
-	<% include partials/menu %>   
+	<% include partals/menu %>   
 
 	<div id="content">
 
 		<% if (user.login) { %>
 			<p>
-				<strong>email</strong>: <%= user.login %><br>
-				<strong>password</strong>: <%= user.password %><br>
-				<strong>account type</strong>: <%= user.type %>
+				<strong>Login</strong>: <%= user.login %><br>
+				<strong>Account type</strong>: <%= user.type %>
 			</p>
 		<% } %>
 	</div>
 
 	<% include partials/footer %>
-
 </body>
 </html>

@@ -1,18 +1,24 @@
 <!doctype html>
 <html>
-<head>
-	<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-</head>
-<body data-ng-app='mainApp'>
-<div>
+<% include partials/header %>   
+<body>
 
-	<div>
-		<h1>Node Authentication</h1>
-		<p>Page with normal authorization</p>
+	<% include partials/menu %>   
 
-		<a href="profile">Profile</a>
-		<a href="logout">Logout</a>
+	<div id="content">
+		<% if (user.type == 'user') { %>
+			<p>Strona pacjenta</p>
+		<% } %>
+
+		<% if (user.type == 'admin') { %>
+			<p>Strona administratora</p>
+		<% } %>
+
+		<% if (user.type == 'doc') { %>
+			<p>Strona doktora</p>
+		<% } %>
 	</div>
-</div>
+
+	<% include partials/footer %>   
 </body>
 </html>

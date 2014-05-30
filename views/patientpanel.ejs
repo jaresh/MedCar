@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<% include partials/header %>   
+<body>
+
+	<% include partials/menu %>   
+
+	<div id="content">
+
+		<% if (user.login) { %>
+			<p>
+				<strong>Nazwa użytkownika</strong>: <%= user.login %><br>
+				<strong>Typ konta</strong>: <%= user.type %><br>
+				<strong>Imię</strong>: <%= user.name %><br>
+				<strong>Drugie imię</strong>: <%= user.secondname %><br>
+				<strong>Nazwisko</strong>: <%= user.lastname %><br>
+				<strong>Pesel</strong>: <%= user.pesel %><br>
+				<strong>Data urodzenia</strong>: <%= user.dateofbirth %>
+			</p>
+		<% } %>
+	</div>
+
+	<% include partials/footer %>
+
+</body>
+</html>

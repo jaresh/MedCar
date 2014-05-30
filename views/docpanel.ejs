@@ -6,17 +6,16 @@
 	<% include partials/menu %>   
 
 	<div id="content">
-
+		
 		<% if (user.login) { %>
 			<p>
-				<strong>email</strong>: <%= user.login %><br>
-				<strong>password</strong>: <%= user.password %><br>
-				<strong>account type</strong>: <%= user.type %>
+				<strong>Login</strong>: <%= user.login %><br>
+				<strong>specialty</strong>: <%= user.specialty %>
 			</p>
 		<% } %>
 	</div>
-
+	
 	<% include partials/footer %>
-
+	
 </body>
 </html>

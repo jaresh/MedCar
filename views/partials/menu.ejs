@@ -1,0 +1,20 @@
+<h1>MedCar</h1>
+
+<div id="main_menu">
+	<a href="/"> Strona główna </a>
+	<a href="profile"> Dane użytkownika </a>
+	<% if (user.type == 'user') { %>
+		<a href="patientpanel"> Panel pacjenta </a>
+	<% } %>
+	<% if (user.type == 'admin') { %>
+		<a href="adminpanel"> Panel administratora </a>
+	<% } %>
+	<% if (user.type == 'doc') { %>
+		<a href="docpanel"> Panel doktora </a>
+	<% } %>
+</div>
+
+<div id="logout">
+	<p> Zalogowany jako: <%= user.login %> </p>
+	<a href="logout">Wyloguj</a>
+</div>

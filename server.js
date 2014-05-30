@@ -10,6 +10,7 @@ var session      = require('express-session');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var path = require('path');
+var $ = require('jquery');
 
 var sessionStore = new connect.session.MemoryStore();
 var sessionSecret = 'wielkiSekret44';

@@ -3,11 +3,7 @@ module.exports = function(app, passport) {
 	app.get('/', function(req, res) {
 		if(req.user)
 		{
-			if (req.user.type == 'user') 
-        		res.render('index.ejs');
-
-    		else if (req.user.type == 'admin')
-         		res.render('admin.ejs');
+			res.render('index', { user: req.user });
 		}
     	else 
          	res.redirect('/login');
@@ -16,9 +12,30 @@ module.exports = function(app, passport) {
 
 	app.get('/profile', function(req, res) {
 		if(req.user)
-			res.render('profile', { user: req.user});
+			res.render('profile', { user: req.user });
 		else
 			res.redirect("/login");
+	});
+
+	app.get('/docpanel', function(req, res) {
+		if(req.user.type == "doc")
+			res.render('docpanel', { user: req.user });
+		else
+			res.redirect("/");
+	});
+
+	app.get('/adminpanel', function(req, res) {
+		if(req.user.type == "admin")
+			res.render('adminpanel', { user: req.user });
+		else
+			res.redirect("/");
+	});
+
+	app.get('/patientpanel', function(req, res) {
+		if(req.user.type == "user")
+			res.render('patientpanel', { user: req.user });
+		else
+			res.redirect("/");
 	});
 
 	app.get('/logout', function(req, res) {
