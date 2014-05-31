@@ -2,15 +2,16 @@
 
 <div id="main_menu">
 	<a href="/"> Strona główna </a>
-	<a href="profile"> Dane użytkownika </a>
 	<% if (user.type == 'user') { %>
 		<a href="patientpanel"> Panel pacjenta </a>
+		<a href="profile"> Dane osobowe </a>
 	<% } %>
 	<% if (user.type == 'admin') { %>
 		<a href="adminpanel"> Panel administratora </a>
 	<% } %>
 	<% if (user.type == 'doc') { %>
 		<a href="docpanel"> Panel doktora </a>
+		<a href="profile"> Dane osobowe </a>
 	<% } %>
 </div>
 

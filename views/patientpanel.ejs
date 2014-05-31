@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<% include partials/header %>   
+		<script language="javascript" type="text/javascript" src="javascripts/patientpanel.js"></script>
 	</head>
 <body>
 
@@ -9,19 +10,33 @@
 
 	<div id="content">
 
-		<% if (user.login) { %>
-			<p>
-				<strong>Nazwa użytkownika</strong>: <%= user.login %><br>
-				<strong>Typ konta</strong>: <%= user.type %><br>
-				<strong>Imię</strong>: <%= user.name %><br>
-				<strong>Drugie imię</strong>: <%= user.secondname %><br>
-				<strong>Nazwisko</strong>: <%= user.lastname %><br>
-				<strong>Pesel</strong>: <%= user.pesel %><br>
-				<strong>Data urodzenia</strong>: <%= user.dateofbirth %>
-			</p>
-		<% } %>
+		<div id="userpanlemenu">
+			<button id="visits" data-name="<%= user.name %>" data-lastname="<%= user.lastname %>">Historia wizyt</button>
+			<button id="docshow">Umów wizytę</button>
+		</div>
+		
+		<div id="myvisits" style="margin-top: 30px;">
+			<table id="uservisitstable">
 
-		<p>Date: <input type="text" id="date"></p>
+			</table>
+		</div>
+
+		<div id="doclist" style="margin-top: 30px;">
+			<table id="doctable">
+			</table>
+		</div>
+
+		<div id="uservisitaddform" style="margin-top:20px;">
+
+			<form action="/api/visitadd" method="post" id="uservisitform">
+				<div id="visitdate" style="margin-top: 20px;">
+					<p>Date: <input type="text" id="date"></p>
+				</div>
+				<div id="visithours" style="margin-top: 20px;">
+				</div>
+			</form>
+		</div>
+
 	</div>
 
 	<% include partials/footer %>

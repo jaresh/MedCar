@@ -10,11 +10,23 @@
 	<div id="content">
 
 		<% if (user.login) { %>
-			<p>
-				<strong>email</strong>: <%= user.login %><br>
-				<strong>password</strong>: <%= user.password %><br>
-				<strong>account type</strong>: <%= user.type %>
-			</p>
+			<% if (user.type == 'user') { %>
+				<p>
+					<strong>Nazwa użytkownika</strong>: <%= user.login %><br>
+					<strong>Imię</strong>: <%= user.name %><br>
+					<strong>Drugie imię</strong>: <%= user.secondname %><br>
+					<strong>Nazwisko</strong>: <%= user.lastname %><br>
+					<strong>Pesel</strong>: <%= user.pesel %><br>
+					<strong>Data urodzenia</strong>: <%= user.dateofbirth %>
+				</p>
+			<% } %>
+			<% if (user.type == 'doc') { %>
+				<p>
+					<strong>Nazwa użytkownika</strong>: <%= user.login %><br>
+					<strong>Imię</strong>: <%= user.name %><br>
+					<strong>Nazwisko</strong>: <%= user.lastname %><br>
+				</p>
+			<% } %>
 		<% } %>
 	</div>
 

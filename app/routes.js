@@ -125,10 +125,27 @@ module.exports = function(app, passport) {
 			res.redirect("/");
 	});
 
+	app.get('/api/uservisits/:name/:lastname', function(req, res) {
+		if(req.user)
+		{
+			if(req.user.type == "user")
+			{
+				Visit.find({patient: req.params.name + " " + req.params.lastname}, function(err, visits){
+           		res.json({visits: visits});
+            	});
+			}
+				
+			else
+			res.redirect("/");
+		}
+		else
+			res.redirect("/");
+	});
+
 	app.get('/api/doclist', function(req, res) {
 		if(req.user)
 		{
-			if(req.user.type == "admin")
+			if(req.user.type == "admin" || req.user.type == "user")
 			{
 				Doc.find(function(err, docs){
            		res.json({docs: docs});
@@ -176,10 +193,30 @@ module.exports = function(app, passport) {
 			res.redirect("/");
 	});
 
+	app.get('/api/useronebyname/:name', function(req, res) {
+		if(req.user)
+		{	
+			console.log("Pacjent do pobrania : " +req.params.name);
+			if(req.user.type == "doc")
+			{
+				var name = req.params.name.split(" ");
+
+				User.findOne({ name: name[0], lastname: name[1] },function(err,docs){
+           			res.json({docs: docs});
+            	});
+			}
+				
+			else
+			res.redirect("/");
+		}
+		else
+			res.redirect("/");
+	});
+
 	app.get('/api/docone/:name/:lastname', function(req, res) {
 		if(req.user)
 		{
-			if(req.user.type == "admin")
+			if(req.user.type == "admin" || req.user.type == "user")
 			{
 				Doc.findOne({ name: req.params.name, lastname: req.params.lastname },function(err,docs){
            			res.json({docs: docs});
@@ -316,6 +353,33 @@ module.exports = function(app, passport) {
 			res.redirect("/");
 	});
 
+	app.post('/api/visitadd',function(req, res) {
+		if(req.user)
+		{
+			if(req.user.type == "user")
+			{
+				var newVisit = new Visit();
+
+				newVisit.doc = req.body.doc;
+				newVisit.patient = req.body.patient;
+				newVisit.hour = req.body.hour;
+				newVisit.day = req.body.day;
+
+				newVisit.save(function(err) {
+					if (err)
+						throw err;
+				});
+
+				res.redirect("/userpanel");
+			}
+				
+			else
+			res.redirect("/");
+		}
+		else
+			res.redirect("/");
+	});
+
 
 	app.get('/api/userdelete/:pesel',function(req, res) {
 		if(req.user)
@@ -356,7 +420,7 @@ module.exports = function(app, passport) {
 			res.redirect("/");
 	});
 
-	app.get('/api/docedit/:name/:lastname',function(req, res) {
+	app.post('/api/docedit/:name/:lastname',function(req, res) {
 		if(req.user)
 		{
 			if(req.user.type == "admin")

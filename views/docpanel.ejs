@@ -9,12 +9,19 @@
 	<% include partials/menu %>   
 
 	<div id="content">
+
+		<div id="docpanlemenu">
+			<button id="visits" data-name="<%= user.name %>" data-lastname="<%= user.lastname %>">Wizyty</button>
+		</div>
 		
 		<div id="myvisits">
+			<table id="docvisitstable" style="margin-top: 30px;">
 
+			</table>
 		</div>
 
-		<button id="visits" data-name="<%= user.name %>" data-lastname="<%= user.lastname %>">Wizyty</a>
+		<div id="userinfocontener" style="margin-top: 30px;">
+		</div>
 	</div>
 	
 	<% include partials/footer %>

@@ -107,13 +107,15 @@ $(document).ready(function() {
       });
   }
 
+  HideAll();
+
   /*
   =============================
       DOC ADD,EDIT,DELETE FORM
   =============================
   */
 
-  HideAll();
+  //Doc add
 
   $("#docadd").click(function () {
     for(var i = 1 ; i < 8; i++){
@@ -146,33 +148,7 @@ $(document).ready(function() {
     $("#docaddform").toggle("slow");
   });
 
-  $('#ponworking').click(function () {
-    $("#1hours").toggle("slow");
-  });
-
-  $('#wtworking').click(function () {
-    $("#2hours").toggle("slow");
-  });
-
-  $('#srworking').click(function () {
-    $("#3hours").toggle("slow");
-  });
-
-  $('#czwworking').click(function () {
-    $("#4hours").toggle("slow");
-  });
-
-  $('#piworking').click(function () {
-    $("#5hours").toggle("slow");
-  });
-
-  $('#soworking').click(function () {
-    $("#6hours").toggle("slow");
-  });
-
-  $('#niworking').click(function () {
-    $("#7hours").toggle("slow");
-  });
+  //Doc delete
 
   $('body').on("click", ".docdeletebtn", function (e){
       e.preventDefault();
@@ -188,6 +164,8 @@ $(document).ready(function() {
         },
       });
   });
+
+  //Doc edit
 
   $('body').on("click", ".doceditbtn", function (e){
     $("#docsubmitbutton").text("Edytuj lekarza");
@@ -284,6 +262,8 @@ $(document).ready(function() {
           $('#7hours').hide();
         }
 
+        $("#admindocform").attr("action",'/api/docedit/' + response.docs.name + '/' + response.docs.lastname);
+
         HideAll();
         $("#doclist").toggle("slow");
         $("#docaddform").toggle("slow");
@@ -300,6 +280,8 @@ $(document).ready(function() {
   =============================
   */
 
+  //User add
+
   $("#useradd").click(function () {
     $("#useraddform").attr("action",'/api/useradd');
     $("#usersubmitbutton").text("Dodaj pacjenta");
@@ -312,6 +294,8 @@ $(document).ready(function() {
     HideAll();
     $("#useraddform").toggle("slow");
   });
+
+  //User delete
 
   $('body').on("click", ".userdeletebtn", function (e){
       e.preventDefault();
@@ -327,6 +311,8 @@ $(document).ready(function() {
         },
       });
   });
+
+  //User edit
 
   $('body').on("click", ".usereditbtn", function (e){
     $("#usersubmitbutton").text("Edytuj pacjenta");
@@ -366,6 +352,40 @@ $(document).ready(function() {
   $("#usershow").click(function(e){
     HideAll();
     UserList(e);
+  });
+
+  /*
+  =============================
+          OTHER
+  =============================
+  */
+
+  $('#ponworking').click(function () {
+    $("#1hours").toggle("slow");
+  });
+
+  $('#wtworking').click(function () {
+    $("#2hours").toggle("slow");
+  });
+
+  $('#srworking').click(function () {
+    $("#3hours").toggle("slow");
+  });
+
+  $('#czwworking').click(function () {
+    $("#4hours").toggle("slow");
+  });
+
+  $('#piworking').click(function () {
+    $("#5hours").toggle("slow");
+  });
+
+  $('#soworking').click(function () {
+    $("#6hours").toggle("slow");
+  });
+
+  $('#niworking').click(function () {
+    $("#7hours").toggle("slow");
   });
 
 });
