@@ -1,18 +1,20 @@
 <!doctype html>
 <html>
-<% include partials/header %>   
+	<head>
+		<% include partials/header %>   
+		<script language="javascript" type="text/javascript" src="javascripts/docpanel.js"></script>
+	</head>
 <body>
 
 	<% include partials/menu %>   
 
 	<div id="content">
 		
-		<% if (user.login) { %>
-			<p>
-				<strong>Login</strong>: <%= user.login %><br>
-				<strong>specialty</strong>: <%= user.specialty %>
-			</p>
-		<% } %>
+		<div id="myvisits">
+
+		</div>
+
+		<button id="visits" data-name="<%= user.name %>" data-lastname="<%= user.lastname %>">Wizyty</a>
 	</div>
 	
 	<% include partials/footer %>

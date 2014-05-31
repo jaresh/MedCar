@@ -4,6 +4,7 @@ mongoose.connect('mongodb://localhost/test');
 var User = require('../App/app/models/user');
 var Admin = require('../App/app/models/admin');
 var Doc = require('../App/app/models/doc');
+var Visit = require('../App/app/models/visit');
 
 //User admin
 var newAdmin = new Admin();
@@ -27,7 +28,7 @@ newUser.name = 'Jacek';
 newUser.secondname = '-';
 newUser.lastname = 'Sikora';
 newUser.pesel = '92022111457';
-newUser.dateofbirth = new Date(1992, 1, 21);
+newUser.dateofbirth = '1992-02-21';
 
 newUser.save(function(err) {
 	if (err)
@@ -44,7 +45,7 @@ newUser.name = 'Mateusz';
 newUser.secondname = 'Wacław';
 newUser.lastname = 'Kowal';
 newUser.pesel = '85022235847';
-newUser.dateofbirth = new Date(1985, 1, 22);
+newUser.dateofbirth = '1985-02-22';
 
 newUser.save(function(err) {
 	if (err)
@@ -57,9 +58,25 @@ var newDoc = new Doc();
 newDoc.login = 'doc';
 newDoc.password = newDoc.generateHash('test');
 newDoc.type = 'doc';
-newDoc.specialty = 'Urolog';
-newDoc.notworkingdays = '2-4-6-7';
-newDoc.workinghours = '12-16';
+newDoc.name = 'Jan';
+newDoc.lastname = 'Potocki';
+newDoc.workingdays.pon = true;
+newDoc.workingdays.wt = true;
+newDoc.workingdays.sr = true;
+newDoc.workingdays.czw = true;
+newDoc.workingdays.pi = true;
+newDoc.workingdays.so = false;
+newDoc.workingdays.ni = false;
+newDoc.workinghours.ponbegin = 8;
+newDoc.workinghours.ponend = 14;
+newDoc.workinghours.wtbegin = 8;
+newDoc.workinghours.wtend = 16;
+newDoc.workinghours.srbegin = 15;
+newDoc.workinghours.srend = 20;
+newDoc.workinghours.czwbegin = 10;
+newDoc.workinghours.czwend = 16;
+newDoc.workinghours.pibegin = 12;
+newDoc.workinghours.piend = 18;
 
 newDoc.save(function(err) {
 	if (err)
@@ -72,13 +89,47 @@ var newDoc = new Doc();
 newDoc.login = 'doc2';
 newDoc.password = newDoc.generateHash('test');
 newDoc.type = 'doc';
-newDoc.specialty = 'Pulmonolog';
-newDoc.notworkingdays = '6-7';
-newDoc.workinghours = '10-18';
+newDoc.name = 'Joanna';
+newDoc.lastname = 'Nowak';
+newDoc.workingdays.pon = true;
+newDoc.workingdays.wt = true;
+newDoc.workingdays.sr = true;
+newDoc.workingdays.czw = false;
+newDoc.workingdays.pi = false;
+newDoc.workingdays.so = false;
+newDoc.workingdays.ni = false;
+newDoc.workinghours.ponbegin = 8;
+newDoc.workinghours.ponend = 14;
+newDoc.workinghours.wtbegin = 8;
+newDoc.workinghours.wtend = 16;
+newDoc.workinghours.srbegin = 15;
+newDoc.workinghours.srend = 20;
 
 newDoc.save(function(err) {
 	if (err)
 		throw err;
+});
+
+//visit
+
+var newVisit = new Visit();
+
+newVisit.doc = "Joanna Nowak";
+newVisit.patient = "Jacek Sikora";
+newVisit.hour = "16:20";
+newVisit.day = "22/03/2014";
+
+newVisit.save(function(err) {
+	if (err)
+		throw err;
+});
+
+Doc.find(function (err, doc){
+	console.log(doc);
+});
+
+Visit.find({patient: "Jacek Sikora"}, function (err, doc){
+	console.log(doc);
 });
 
 console.log("Added db sample data.");

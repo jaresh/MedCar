@@ -1,7 +1,7 @@
 //== setup
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 8080;
+var port     = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var connect = require('connect');
 var cookieParser = require('cookie-parser');
@@ -49,4 +49,4 @@ app.use(function(err, req, res, next){
 require('./app/routes.js')(app, passport); 
 
 app.listen(port);
-console.log('The magic happens on port ' + port);
+console.log('Server starts on port ' + port);

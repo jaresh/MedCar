@@ -1,18 +1,148 @@
 <!doctype html>
 <html>
-<% include partials/header %>   
+	<head>
+		<% include partials/header %>   
+		<script language="javascript" type="text/javascript" src="javascripts/adminpanel.js"></script>
+	</head>
 <body>
 
 	<% include partials/menu %>   
 
 	<div id="content">
+		<div id="adminpanlemenu">
+			<button id="docadd">Dodaj lekarza</a>
+			<button id="useradd">Dodaj pacjenta</a>
+			<button id="docshow">Wyświetl lekarzy</a>
+			<button id="usershow">Wyświetl pacjentów</a>
+		</div>
 
-		<% if (user.login) { %>
-			<p>
-				<strong>Login</strong>: <%= user.login %><br>
-				<strong>Account type</strong>: <%= user.type %>
-			</p>
-		<% } %>
+		<div id="doclist" style="margin-top: 30px;">
+			<table id="doctable">
+			</table>
+		</div>
+
+		<div id="userlist" style="margin-top: 30px;">
+			<table id="usertable">
+			</table>
+		</div>
+
+		<div id="docaddform" style="margin-top:20px;">
+
+			<form action="/api/docadd" method="post" id="admindocform">
+
+				<div style="margin-bottom:20px;">
+					<label>Login do panelu</label>
+					<input type="text" name="login">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Hasło do panelu</label>
+					<input type="password" name="password">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Imię</label>
+					<input type="text" name="name">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Nazwisko</label>
+					<input type="text" name="lastname">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Wybierz dni pracujące</label>
+					<br>
+					<input type="checkbox" name="pon" id="ponworking" value="1">Poniedziałek<br>
+					<input type="checkbox" name="wt" id="wtworking" value="2">Wtorek<br>
+					<input type="checkbox" name="sr" id="srworking" value="3">Środa<br>
+					<input type="checkbox" name="czw" id="czwworking" value="4">Czwartek<br>
+					<input type="checkbox" name="pi" id="piworking" value="5">Piątek<br>
+					<input type="checkbox" name="so" id="soworking" value="6">Sobota<br>
+					<input type="checkbox" name="ni" id="niworking" value="7">Niedziela<br>
+				</div>
+
+				<div style="margin-bottom:20px;">
+					<div id="1hours">
+						<p>Poniedziałek</p>
+						<input type="number" name="ponbegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="ponend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+					</div>
+					<div id="2hours">
+						<p>Wtorek</p>
+						<input type="number" name="wtbegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="wtend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+					</div>
+					<div id="3hours">
+						<p>Środa</p>
+						<input type="number" name="srbegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="srend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+					</div>
+					<div id="4hours">
+						<p>Czwartek</p>
+						<input type="number" name="czwbegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="czwend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+					</div>
+					<div id="5hours">
+						<p>Piątek</p>
+						<input type="number" name="pibegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="piend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+					</div>
+					<div id="6hours">
+						<p>Sobota</p>
+						<input type="number" name="sobegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="soend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+					</div>
+					<div id="7hours">
+						<p>Niedziela</p>
+						<input type="number" name="nibegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="niend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+					</div>
+
+				</div>
+
+				<button id="docsumbitbutton" type="submit">Dodaj lekarza</button>
+
+			</form>
+
+		</div>
+
+		<div id="useraddform" style="margin-top:20px;">
+
+			<form action="/api/useradd" method="post" id="adminuserform">
+
+				<div style="margin-bottom:20px;">
+					<label>Login do panelu</label>
+					<input type="text" name="login" value="">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Hasło do panelu</label>
+					<input type="password" name="password">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Imię</label>
+					<input type="text" name="name" value="">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Drugie imię</label>
+					<input type="text" name="secondname" value="-">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Nazwisko</label>
+					<input type="text" name="lastname" value="">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Pesel</label>
+					<input type="text" name="pesel" value="">
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Data urodzenia</label>
+					<input type="date" name="dateofbirth" value="">
+				</div>
+				
+
+				<button id="usersubmitbutton" type="submit">Dodaj pacjenta</button>
+
+			</form>
+		
+		</div>
+	
 	</div>
 
 	<% include partials/footer %>
