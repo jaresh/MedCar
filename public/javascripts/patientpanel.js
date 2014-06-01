@@ -1,15 +1,21 @@
+/*jshint smarttabs:true */
+/*global $:false */
+/*global key:false */
+// checked with jshint
+
 $(document).ready(function() {
 
 /*
-  =============================
-          FUNCTIONS
-  =============================
- */
+=============================
+        FUNCTIONS
+=============================
+*/
 
 function HideAll(){
     $("#myvisits").hide();
     $("#uservisitaddform").hide();
     $("#doclist").hide();
+    $("#visithours").hide();
   }
 
   function DocList(e){
@@ -66,11 +72,12 @@ function HideAll(){
           HideAll();
           $("#doclist").toggle("slow");
         },
-        error: function(xhRequest, ErrorText, thrownError) {
+        error: function(ErrorText) {
           console.log(ErrorText);
         },
       });
   }
+
 
   HideAll();
 
@@ -80,7 +87,7 @@ function HideAll(){
         url: '/api/uservisits/' + $("#visits").attr("data-name") + '/'+ $("#visits").attr("data-lastname"),
         type: 'GET',
         dataType: 'json',
-        success: function(response) {	
+        success: function(response) { 
           $("#uservisitstable").empty();
           $("#uservisitstable").append("<tr><th>Lekarz</th><th>Godzina</th><th>Dzień</th></tr>");
           $.each(response.visits, function(key, value) {
@@ -98,124 +105,239 @@ function HideAll(){
         error: function() {
         },
       });
-	});
+  });
 
   $('body').on("click", ".docvisitbtn", function (e){
+      $('button[type="submit"]').attr("disabled", true);
       e.preventDefault();
       $.ajax({
         url: '/api/docone/' + $(this).attr("data-name") + '/' + $(this).attr("data-lastname"),
-      	type: 'GET',
+        type: 'GET',
         success: function(response) { 
 
-        	var daysToDisable = [0,1,2,3,4,5,6];
+          var daysToDisable = [0,1,2,3,4,5,6];
+          var index = 0;
 
-        	$('#date').datepicker( "destroy" );
+          $('#uservisitaddform input[name="name"]').attr("value",response.docs.name);
+          $('#uservisitaddform input[name="lastname"]').attr("value",response.docs.lastname);
 
-        	if(response.docs.workingdays.pon)
-        	{
-        		console.log("pon" + response.docs.workingdays.pon);
-        		var index = daysToDisable.indexOf(1);
+          var ponbegin = response.docs.workinghours.ponbegin;
+          var ponend = response.docs.workinghours.ponend;
+          var wtbegin = response.docs.workinghours.wtbegin;
+          var wtend = response.docs.workinghours.wtend;
+          var srbegin = response.docs.workinghours.srbegin;
+          var srend = response.docs.workinghours.srend;
+          var czwbegin = response.docs.workinghours.czwbegin;
+          var czwend = response.docs.workinghours.czwend;
+          var pibegin = response.docs.workinghours.pibegin;
+          var piend = response.docs.workinghours.piend;
+          var sobegin = response.docs.workinghours.sobegin;
+          var soend = response.docs.workinghours.soend;
+          var nibegin = response.docs.workinghours.nibegin;
+          var niend = response.docs.workinghours.niend;
 
-        		if (index > -1) {
-    				daysToDisable.splice(index, 1);
-				}
-        	}
+          $('#date').datepicker( "destroy" );
 
-        	if(response.docs.workingdays.wt)
-        	{
-        		console.log("wt" + response.docs.workingdays.wt);
-        		var index = daysToDisable.indexOf(2);
-        		
-        		if (index > -1) {
-    				daysToDisable.splice(index, 1);
-				}
-        	}
+          if(response.docs.workingdays.pon)
+          {
+            index = daysToDisable.indexOf(1);
 
-        	if(response.docs.workingdays.sr)
-        	{
-				console.log("sr" + response.docs.workingdays.sr);
-        		var index = daysToDisable.indexOf(3);
-        		
-        		if (index > -1) {
-    				daysToDisable.splice(index, 1);
-				}
-        	}
+            if (index > -1) {
+            daysToDisable.splice(index, 1);
+            }
+          }
 
-        	if(response.docs.workingdays.czw)
-        	{
-        		console.log("czw" + response.docs.workingdays.czw);
-        		var index = daysToDisable.indexOf(4);
-        		
-        		if (index > -1) {
-    				daysToDisable.splice(index, 1);
-				}
-        	}
+          if(response.docs.workingdays.wt)
+          {
+            index = daysToDisable.indexOf(2);
 
-        	if(response.docs.workingdays.pi)
-        	{
-        		console.log("pi" + response.docs.workingdays.pi);
-        		var index = daysToDisable.indexOf(5);
-        		
-        		if (index > -1) {
-    				daysToDisable.splice(index, 1);
-				}
-        	}
-        	if(response.docs.workingdays.so)
-        	{
-        		console.log("so" + response.docs.workingdays.so);
-        		var index = daysToDisable.indexOf(6);
-        		
-        		if (index > -1) {
-    				daysToDisable.splice(index, 1);
-				}
-        	}
-        	if(response.docs.workingdays.ni)
-        	{
-        		console.log("ni" + response.docs.workingdays.ni);
-        		var index = daysToDisable.indexOf(0);
-        		
-        		if (index > -1) {
-    				daysToDisable.splice(index, 1);
-				}
-        	}
+            if (index > -1) {
+            daysToDisable.splice(index, 1);
+            }
+          }
 
-        	console.log("Tablica z dniami: " + daysToDisable);
+          if(response.docs.workingdays.sr)
+          {
+            index = daysToDisable.indexOf(3);
+    
+            if (index > -1) {
+            daysToDisable.splice(index, 1);
+            }
+          }
 
-        	function disableSpecificWeekDays(date) {
-				var day = date.getDay();
-				for (i = 0; i < daysToDisable.length; i++) {
-		    		if ($.inArray(day, daysToDisable) != -1) {
-		    	   		return [false];
-		    		}
-				}
-				return [true];
-			}
+          if(response.docs.workingdays.czw)
+          {
+            index = daysToDisable.indexOf(4);
+            
+            if (index > -1) {
+            daysToDisable.splice(index, 1);
+            }
+          }
 
-        	$('#date').datepicker({
-		    	beforeShowDay: disableSpecificWeekDays,
-				monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec',
-				'Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
-	        	monthNamesShort: ['Sty','Lu','Mar','Kw','Maj','Cze','Lip',
-	        	'Sie','Wrz','Pa','Lis','Gru'],
-	        	dayNamesShort: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
-	        	dayNamesMin: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
-	        	dayNames: ['Niedziela','Poniedzialek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
-	        	minDate: 0,
-			});
+          if(response.docs.workingdays.pi)
+          {
+            index = daysToDisable.indexOf(5);
+            
+            if (index > -1) {
+            daysToDisable.splice(index, 1);
+            }
+          }
+          if(response.docs.workingdays.so)
+          {
+            index = daysToDisable.indexOf(6);
+            
+            if (index > -1) {
+            daysToDisable.splice(index, 1);
+            }
+          }
+          if(response.docs.workingdays.ni)
+          {
+            index = daysToDisable.indexOf(0);
+            
+            if (index > -1) {
+            daysToDisable.splice(index, 1);
+            }
+          }
 
-			$("#uservisitaddform").hide();
+          function disableSpecificWeekDays(date) {
+            var day = date.getDay();
+            for (var i = 0; i < daysToDisable.length; i++) {
+              if ($.inArray(day, daysToDisable) != -1) {
+                   return [false];
+              }
+            }
+            return [true];
+          }
 
-         	$("#uservisitaddform").toggle("slow");
+          $('#date').datepicker({
+            beforeShowDay: disableSpecificWeekDays,
+            buttonImage: '/images/images.png',
+            buttonImageOnly: true,
+            showOn: "both",
+            monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec',
+            'Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
+            monthNamesShort: ['Sty','Lu','Mar','Kw','Maj','Cze','Lip',
+            'Sie','Wrz','Pa','Lis','Gru'],
+            dayNamesShort: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
+            dayNamesMin: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
+            dayNames: ['Niedziela','Poniedzialek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
+            minDate: 0,
+            onSelect: function(dateText) {
+              var datetofind = dateText.split("/");
+
+              if($("#visithours:visible"))
+              $("#visithours").hide();
+
+              $("#visithour").empty();
+
+              $("#currentdate").attr("value",datetofind[2] + "-" + datetofind[1] + "-" + datetofind[0]);
+
+              $.ajax({
+                url: '/api/getvisitbydate/' + response.docs.name + "/" + response.docs.lastname + "/" + datetofind[2] + "-" + datetofind[1] + "-" + datetofind[0],
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) { 
+
+                  var hourstodelete = [];
+                  var dochoursbegin = "";
+                  var dochoursend = "";
+
+                  if(response.visits)
+                  {
+                    $.each(response.visits, function(key, value) {
+                      hourstodelete.push(value.hour);
+                    });
+                  }
+
+                  var currentdate = $('#date').datepicker('getDate');
+                  var dayOfWeek = currentdate.getUTCDay();
+
+                  if(dayOfWeek == 0)
+                  {
+                    var dochoursbegin = ponbegin;
+                    var dochoursend = ponend;
+                  }
+                  if(dayOfWeek == 1)
+                  {
+                    var dochoursbegin = wtbegin;
+                    var dochoursend = wtend;
+                  }
+                  if(dayOfWeek == 2)
+                  {
+                    var dochoursbegin = srbegin;
+                    var dochoursend = srend;
+                  }
+                  if(dayOfWeek == 3)
+                  {
+                    var dochoursbegin = czwbegin;
+                    var dochoursend = czwend;
+                  }
+                  if(dayOfWeek == 4)
+                  {
+                    var dochoursbegin = pibegin;
+                    var dochoursend = piend;
+                  }
+                  if(dayOfWeek == 5)
+                  {
+                    var dochoursbegin = sobegin;
+                    var dochoursend = soend;
+                  }
+                  if(dayOfWeek == 6)
+                  {
+                    var dochoursbegin = nibegin;
+                    var dochoursend = niend;
+                  }
+
+                  $("#visithour").append("<option value='-'>-</option>");
+
+                  for(var i = dochoursbegin; i < dochoursend; i++)
+                  {
+                    $("#visithour").append("<option value='" + i + ':' + '00' + "'>" + i + ':' + '00' + "</option>");
+                    $("#visithour").append("<option value='" + i + ':' + '10' + "'>" + i + ':' + '10' + "</option>");
+                    $("#visithour").append("<option value='" + i + ':' + '20' + "'>" + i + ':' + '20' + "</option>");
+                    $("#visithour").append("<option value='" + i + ':' + '30' + "'>" + i + ':' + '30' + "</option>");
+                    $("#visithour").append("<option value='" + i + ':' + '40' + "'>" + i + ':' + '40' + "</option>");
+                    $("#visithour").append("<option value='" + i + ':' + '50' + "'>" + i + ':' + '50' + "</option>");
+                  }
+
+                  if(hourstodelete)
+                  {
+                    $.each(hourstodelete, function(key, value) {
+                      $('option[value="'+ value +'"]').remove();
+                    });
+                  }
+
+                  $("#visithours").toggle("slow");
+
+                },
+                error: function() {
+                  console.log("Błąd AJAX");
+                },
+              });
+            }
+          });
+
+          $("#uservisitaddform").hide();
+
+          $("#uservisitaddform").toggle("slow");
         },
-        error: function(xhRequest, ErrorText, thrownError) {
+        error: function(ErrorText) {
           console.log(ErrorText);
         },
       });
   });
 
-  	$("#docshow").click(function(e){
-      HideAll();
-      DocList(e);
-  	});
+  $('#visithour').bind('change', function () {
+          
+      $('button[type="submit"]').attr("disabled", false);
+
+  });
+
+  $("#docshow").click(function(e){
+    HideAll();
+    DocList(e);
+  });
+
+
 
 });

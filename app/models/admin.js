@@ -1,11 +1,16 @@
+/*jshint smarttabs:true */
+/*global require:false */
+/*global module:false */
+// checked with jshint
+
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
 var adminSchema = mongoose.Schema({
     
-    login        : String,
-    password     : String,
-    type         : String,
+    login :       { type: String, validate: /\w/ },
+    password:     { type: String, validate: /\w/ },
+    type  :       { type: String, enum: ['admin'] },
    
 });
 

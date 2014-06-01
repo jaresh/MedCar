@@ -1,3 +1,7 @@
+/*global $:false */
+/*jshint smarttabs:true */
+// checked with jshint
+
 $(document).ready(function() {
 
 // Login form
@@ -6,14 +10,14 @@ $(document).ready(function() {
           var type = $(this).val(); 
           
           if (type == "user") { 
-              $("#loginformaction").attr("action", "/login")
+              $("#loginformaction").attr("action", "/login");
           }
           else if (type == "doc") { 
-              $("#loginformaction").attr("action", "/logindoc")
+              $("#loginformaction").attr("action", "/logindoc");
           }
           
           else if (type == "admin") { 
-              $("#loginformaction").attr("action", "/loginadmin")
+              $("#loginformaction").attr("action", "/loginadmin");
           }
           
           return false;

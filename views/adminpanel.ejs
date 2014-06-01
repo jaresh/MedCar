@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<% include partials/header %>   
-		<script language="javascript" type="text/javascript" src="javascripts/adminpanel.js"></script>
+		<script type="text/javascript" src="javascripts/adminpanel.js"></script>
 	</head>
 <body>
 
@@ -26,25 +26,30 @@
 			</table>
 		</div>
 
-		<div id="docaddform" style="margin-top:20px;">
+		<div id="docaddform">
 
 			<form action="/api/docadd" method="post" id="admindocform">
 
+				<h2> Formularz lekarza </h2>
 				<div style="margin-bottom:20px;">
 					<label>Login do panelu</label>
 					<input type="text" name="login">
+					<div id="loginerror" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
 					<label>Hasło do panelu</label>
 					<input type="password" name="password">
+					<div id="passworderror" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
-					<label>Imię</label>
+					<label style="margin-right: 91px;">Imię</label>
 					<input type="text" name="name">
+					<div id="nameerror" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
-					<label>Nazwisko</label>
+					<label style="margin-right: 50px;">Nazwisko</label>
 					<input type="text" name="lastname">
+					<div id="lastnameerror" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
 					<label>Wybierz dni pracujące</label>
@@ -61,38 +66,38 @@
 				<div style="margin-bottom:20px;">
 					<div id="1hours">
 						<p>Poniedziałek</p>
-						<input type="number" name="ponbegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
-						<input type="number" name="ponend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+						<input type="number" name="ponbegin" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="ponend" value="8" min="8" max="20">Koniec pracy<br>
 					</div>
 					<div id="2hours">
 						<p>Wtorek</p>
-						<input type="number" name="wtbegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
-						<input type="number" name="wtend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+						<input type="number" name="wtbegin" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="wtend" value="8" min="8" max="20">Koniec pracy<br>
 					</div>
 					<div id="3hours">
 						<p>Środa</p>
-						<input type="number" name="srbegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
-						<input type="number" name="srend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+						<input type="number" name="srbegin" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="srend" value="8" min="8" max="20">Koniec pracy<br>
 					</div>
 					<div id="4hours">
 						<p>Czwartek</p>
-						<input type="number" name="czwbegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
-						<input type="number" name="czwend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+						<input type="number" name="czwbegin" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="czwend" value="8" min="8" max="20">Koniec pracy<br>
 					</div>
 					<div id="5hours">
 						<p>Piątek</p>
-						<input type="number" name="pibegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
-						<input type="number" name="piend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+						<input type="number" name="pibegin" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="piend" value="8" min="8" max="20">Koniec pracy<br>
 					</div>
 					<div id="6hours">
 						<p>Sobota</p>
-						<input type="number" name="sobegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
-						<input type="number" name="soend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+						<input type="number" name="sobegin" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="soend" value="8" min="8" max="20">Koniec pracy<br>
 					</div>
 					<div id="7hours">
 						<p>Niedziela</p>
-						<input type="number" name="nibegin" maxlength="2" value="8" min="8" max="20">Początek pracy<br>
-						<input type="number" name="niend" maxlength="2" value="8" min="8" max="20">Koniec pracy<br>
+						<input type="number" name="nibegin" value="8" min="8" max="20">Początek pracy<br>
+						<input type="number" name="niend" value="8" min="8" max="20">Koniec pracy<br>
 					</div>
 
 				</div>
@@ -103,36 +108,42 @@
 
 		</div>
 
-		<div id="useraddform" style="margin-top:20px;">
-
+		<div id="useraddform">
+			<h2> Formularz pacjenta </h2>
 			<form action="/api/useradd" method="post" id="adminuserform">
 
 				<div style="margin-bottom:20px;">
 					<label>Login do panelu</label>
 					<input type="text" name="login" value="">
+					<div id="loginerror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
 					<label>Hasło do panelu</label>
 					<input type="password" name="password">
+					<div id="passworderror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
-					<label>Imię</label>
+					<label style="margin-right: 90px;">Imię</label>
 					<input type="text" name="name" value="">
+					<div id="nameerror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
-					<label>Drugie imię</label>
+					<label style="margin-right: 38px;">Drugie imię</label>
 					<input type="text" name="secondname" value="-">
+					<div id="secondnameerror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
-					<label>Nazwisko</label>
+					<label style="margin-right: 50px;">Nazwisko</label>
 					<input type="text" name="lastname" value="">
+					<div id="lastnameerror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
-					<label>Pesel</label>
+					<label style="margin-right: 80px;">Pesel</label>
 					<input type="text" name="pesel" value="">
+					<div id="peselerror" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
-					<label>Data urodzenia</label>
+					<label style="margin-right: 8px;">Data urodzenia</label>
 					<input type="date" name="dateofbirth" value="">
 				</div>
 				

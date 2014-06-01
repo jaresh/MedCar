@@ -26,14 +26,16 @@
 			<div style="margin-bottom:20px;">
 				<label>Nazwa użytkownika</label>
 				<input type="text" name="login">
+				<div id="loginerror" data-status="good"></div>
 			</div>
 			<div style="margin-bottom:20px;">
 				<label>Hasło</label>
 				<br>
 				<input type="password" name="password">
+				<div id="passworderror" data-status="good"></div>
 			</div>
 
-			<button type="submit">Zaloguj się</button>
+			<button type="submit" enabled>Zaloguj się</button>
 		</form>
 	
 		<% if (message.length > 0) { %>

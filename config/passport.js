@@ -1,3 +1,9 @@
+/*jshint smarttabs:true */
+/*global require:false */
+/*global module:false */
+/*global process:false */
+// checked with jshint
+
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../app/models/user');

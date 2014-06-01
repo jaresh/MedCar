@@ -1,6 +1,13 @@
+/*jshint smarttabs:true */
+/*global require:false */
+/*global module:false */
+/*global err:false */
+// checked with jshint
+
 var Visit = require('./models/visit');
 var Doc = require('./models/doc');
 var User = require('./models/user');
+var Admin = require('./models/admin');
 
 module.exports = function(app, passport) {
 
@@ -13,8 +20,8 @@ module.exports = function(app, passport) {
 	app.get('/', function(req, res) {
 		if(req.user)
 			res.render('index', { user: req.user });
-    	else 
-         	res.redirect('/login');
+    else 
+      res.redirect('/login');
 
 	});
 
@@ -108,14 +115,14 @@ module.exports = function(app, passport) {
 ========================================
 */	
 
- 	app.get('/api/docvisits/:name/:lastname', function(req, res) {
+	app.get('/api/docvisits/:name/:lastname', function(req, res) {
 		if(req.user)
 		{
 			if(req.user.type == "doc")
 			{
 				Visit.find({doc: req.params.name + " " + req.params.lastname}, function(err, visits){
-           		res.json({visits: visits});
-            	});
+              		res.json({visits: visits});
+				});
 			}
 				
 			else
@@ -131,8 +138,25 @@ module.exports = function(app, passport) {
 			if(req.user.type == "user")
 			{
 				Visit.find({patient: req.params.name + " " + req.params.lastname}, function(err, visits){
-           		res.json({visits: visits});
-            	});
+              res.json({visits: visits});
+              });
+			}
+				
+			else
+			res.redirect("/");
+		}
+		else
+			res.redirect("/");
+	});
+
+	app.get('/api/getvisitbydate/:name/:lastname/:date', function(req, res) {
+		if(req.user)
+		{
+			if(req.user.type == "user")
+			{
+				Visit.find({doc: req.params.name + " " + req.params.lastname, day: req.params.date}, function(err, visits){
+              		res.json({visits: visits});
+              	});
 			}
 				
 			else
@@ -148,8 +172,8 @@ module.exports = function(app, passport) {
 			if(req.user.type == "admin" || req.user.type == "user")
 			{
 				Doc.find(function(err, docs){
-           		res.json({docs: docs});
-            	});
+              		res.json({docs: docs});
+              	});
 			}
 				
 			else
@@ -165,8 +189,8 @@ module.exports = function(app, passport) {
 			if(req.user.type == "admin")
 			{
 				User.find(function(err, docs){
-           		res.json({docs: docs});
-            	});
+              		res.json({docs: docs});
+              	});
 			}
 				
 			else
@@ -181,9 +205,51 @@ module.exports = function(app, passport) {
 		{
 			if(req.user.type == "admin")
 			{
-				User.findOne({ pesel: req.params.pesel },function(err,docs){
-           			res.json({docs: docs});
-            	});
+				User.findOne({ pesel: req.params.pesel },function(err, docs){
+					res.json({docs: docs});
+              	});
+			}
+				
+			else
+			res.redirect("/");
+		}
+		else
+			res.redirect("/");
+	});
+
+	app.get('/api/findlogin/:login', function(req, res) {
+		if(req.user)
+		{
+			if(req.user.type == "admin")
+			{
+
+				User.findOne({ login: req.params.login },function(err, docs){
+                if(docs){
+                  res.json({findlogin: true});
+                }
+                else
+                {
+                  Admin.findOne({ login: req.params.login },function(err, docs){
+
+                    if(docs){
+                      res.json({findlogin: true});
+                    }
+                    else{
+
+						Doc.findOne({ login: req.params.login },function(err, docs){
+
+                        if(docs){
+                          res.json({findlogin: true});
+                        }
+                        else
+                        {
+                          res.json({findlogin: false});
+                        }
+                      });
+                    }
+                  });
+                }
+              });
 			}
 				
 			else
@@ -196,14 +262,13 @@ module.exports = function(app, passport) {
 	app.get('/api/useronebyname/:name', function(req, res) {
 		if(req.user)
 		{	
-			console.log("Pacjent do pobrania : " +req.params.name);
 			if(req.user.type == "doc")
 			{
 				var name = req.params.name.split(" ");
 
-				User.findOne({ name: name[0], lastname: name[1] },function(err,docs){
-           			res.json({docs: docs});
-            	});
+				User.findOne({ name: name[0], lastname: name[1] },function(err, docs){
+                res.json({docs: docs});
+              });
 			}
 				
 			else
@@ -218,9 +283,36 @@ module.exports = function(app, passport) {
 		{
 			if(req.user.type == "admin" || req.user.type == "user")
 			{
-				Doc.findOne({ name: req.params.name, lastname: req.params.lastname },function(err,docs){
-           			res.json({docs: docs});
-            	});
+				Doc.findOne({ name: req.params.name, lastname: req.params.lastname },function(err, docs){
+                	res.json({docs: docs});
+              	});
+			}
+				
+			else
+			res.redirect("/");
+		}
+		else
+			res.redirect("/");
+	});
+
+	app.post('/api/visitadd',function(req, res) {
+		if(req.user)
+		{
+			if(req.user.type == "user")
+			{
+				var newVisit = new Visit();
+
+				newVisit.doc = req.body.name + " " + req.body.lastname;
+				newVisit.patient = req.user.name + " " + req.user.lastname;
+				newVisit.day = req.body.date;
+				newVisit.hour = req.body.visithour;
+
+				newVisit.save(function(err) {
+					if (err)
+						throw err;
+				});
+
+				res.redirect("/userpanel");
 			}
 				
 			else
@@ -386,8 +478,8 @@ module.exports = function(app, passport) {
 		{
 			if(req.user.type == "admin")
 			{
-				User.findOne({ pesel: req.params.pesel },function(err,docs){  
-    				docs.remove(); 
+				User.findOne({ pesel: req.params.pesel },function(err, docs){  
+            docs.remove(); 
 				});  
 
 				res.redirect("/adminpanel");
@@ -406,8 +498,8 @@ module.exports = function(app, passport) {
 			if(req.user.type == "admin")
 			{
 
-				Doc.findOne({ name: req.params.name, lastname:  req.params.lastname},function(err,docs){  
-    				docs.remove(); 
+				Doc.findOne({ name: req.params.name, lastname:  req.params.lastname},function(err, docs){  
+            docs.remove(); 
 				});  
 
 				res.redirect("/adminpanel");
@@ -425,9 +517,13 @@ module.exports = function(app, passport) {
 		{
 			if(req.user.type == "admin")
 			{
-				Doc.findOne({ name: req.params.name, lastname: req.params.lastname },function(err,docs){  
+				Doc.findOne({ name: req.params.name, lastname: req.params.lastname },function(err, docs){  
+
+					var newDoc = new Doc();
 
 					docs.login = req.body.login;
+					if(req.body.password)
+					  docs.password = newDoc.generateHash(req.body.password);
 					docs.type = 'doc';
 					docs.name = req.body.name;
 					docs.lastname = req.body.lastname;
@@ -518,17 +614,21 @@ module.exports = function(app, passport) {
 		{
 			if(req.user.type == "admin")
 			{
-				User.findOne({ pesel: req.params.pesel },function(err,docs){  
+				User.findOne({ pesel: req.params.pesel },function(err, docs){  
 
-    				docs.login = req.body.login;
+					var newUser = new User();
+
+					docs.login = req.body.login;
+					if(req.body.password)
+					  docs.password = newUser.generateHash(req.body.password);
 					docs.type = 'user';
 					docs.name = req.body.name;
 					docs.secondname = req.body.secondname;
 					docs.lastname = req.body.lastname;
 					docs.pesel = req.body.pesel;
 					docs.dateofbirth = req.body.dateofbirth;
-
-  					docs.save(function(err) {
+          
+          docs.save(function(err) {
 					if (err)
 						throw err;
 					});

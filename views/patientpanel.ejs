@@ -26,14 +26,30 @@
 			</table>
 		</div>
 
-		<div id="uservisitaddform" style="margin-top:20px;">
+		<div id="uservisitaddform">
 
 			<form action="/api/visitadd" method="post" id="uservisitform">
+
+				<h2> Wizyta </h2>
+				<div style="margin-bottom:20px;">
+					<label>Imię lekarza</label>
+					<input type="text" name="name" readonly>
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>Nazwisko lekarza</label>
+					<input type="text" name="lastname" readonly>
+				</div>
 				<div id="visitdate" style="margin-top: 20px;">
-					<p>Date: <input type="text" id="date"></p>
+					Date: <input type="hidden" id="date">
+					<input type="text" id="currentdate" name="date" value="" readonly>
 				</div>
 				<div id="visithours" style="margin-top: 20px;">
+					<label>Wybierz godzinę</label>
+					<br>
+					<select name="visithour" id="visithour">
+					</select>
 				</div>
+				<button type="submit" style="margin-top:20px;" disabled>Umów się</button>
 			</form>
 		</div>
 

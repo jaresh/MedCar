@@ -1,3 +1,5 @@
+/*global require:false */
+// checked with jshint
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test'); 
 
@@ -117,7 +119,7 @@ var newVisit = new Visit();
 newVisit.doc = "Joanna Nowak";
 newVisit.patient = "Jacek Sikora";
 newVisit.hour = "16:20";
-newVisit.day = "22/03/2014";
+newVisit.day = "2014-03-22";
 
 newVisit.save(function(err) {
 	if (err)

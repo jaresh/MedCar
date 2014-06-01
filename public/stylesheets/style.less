@@ -23,7 +23,21 @@
 /* 
 
 ===========================
-		PAGE CSS
+		FONT 
+===========================
+
+ */
+
+
+@font-face {
+font-family: Raleway;
+src: url("../fonts/Raleway-Regular.otf") format("opentype");
+}
+
+/* 
+
+===========================
+	PAGE ELEMENTS STYLE
 ===========================
 
  */
@@ -56,10 +70,32 @@ button{
 		
 }
 
+input[type="text"],input[type="password"],input[type="date"],input[type="number"]{
+
+		.border-radius(20px);
+		padding:5px;
+		text-align: center;
+}
+
+input:focus{
+	outline: none;
+}
+
+select:focus{
+	outline: none;
+}
+
 button:hover{
 		background-color: grey;
 		color:white;
-		border-color:grey
+		border-color:grey;
+}
+
+button[disabled]{
+	
+	background-color: black;
+	color:white;
+	border-color:black;
 }
 
 table{
@@ -68,11 +104,21 @@ table{
 
 table tbody tr:first-child{
 	background-color: grey;
+	color:white;
 }
 
 th{
 	border: 1px solid black;
 }
+
+/* 
+
+===========================
+	PAGE ID STYLE
+===========================
+
+ */
+
 
 #main_menu {
 	width: 650px;
@@ -111,14 +157,16 @@ th{
 }
 
 #loginform{
-	width:300px;
-	height: 200px;
+	width: 300px;
+	height: 400px;
 	margin: 0px auto;
 	text-align: center;
 	margin-top: 10px;
+	padding: 25px;
+	background-color: #CECEB5;
+	.border-radius(20px);
 
 	select{
-
 		color: black;
 		padding: 5px;
 		border: 1px solid black;
@@ -157,3 +205,45 @@ th{
 		margin-top: 0px;
 	}
 }
+
+div[data-status="error"]{
+	font-size: 15px;
+	margin-top: 10px;
+    text-align: center;
+    width: 304px;
+}
+
+#docaddform
+{
+	width:400px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 25px;
+	background-color: #CECEB5;
+	.border-radius(20px);
+	margin-top:20px;
+}
+
+#useraddform
+{
+	width:400px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 25px;
+	background-color: #CECEB5;
+	.border-radius(20px);
+	margin-top:20px;
+}
+
+#uservisitaddform
+{
+	width:400px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 25px;
+	background-color: #CECEB5;
+	.border-radius(20px);
+	margin-top:20px;
+}
+
+

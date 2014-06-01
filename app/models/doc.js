@@ -1,13 +1,18 @@
+/*jshint smarttabs:true */
+/*global require:false */
+/*global module:false */
+// checked with jshint
+
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
 var docSchema = mongoose.Schema({
     
-    login           : String,
-    password        : String,
-    type            : String,
-    name            : String,
-    lastname        : String,
+    login           : { type: String, required: true, unique: true, validate: /\w/ },
+    password        : { type: String, required: true, validate: /\w/ },
+    type            : { type: String, required: true, enum: ['doc'] },
+    name            : { type: String, required: true, validate: /\w/ },
+    lastname        : { type: String, required: true, unique: true, validate: /\w/ },
 
     workingdays     : {
         pon           : Boolean,

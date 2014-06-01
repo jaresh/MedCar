@@ -1,3 +1,9 @@
+/*jshint smarttabs:true */
+/*global require:false */
+/*global __dirname:false */
+/*global process:false */
+// checked with jshint
+
 //== setup
 var express  = require('express');
 var app      = express();
@@ -10,7 +16,6 @@ var session      = require('express-session');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var path = require('path');
-var $ = require('jquery');
 
 var sessionStore = new connect.session.MemoryStore();
 var sessionSecret = 'wielkiSekret44';
@@ -37,16 +42,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(err, req, res, next){
-
-  	if(req.user)
-		res.redirect('/');
-	else
-		res.render('login.ejs', { message: req.flash('loginMessage') });
-	
-});
-
 require('./app/routes.js')(app, passport); 
 
 app.listen(port);
 console.log('Server starts on port ' + port);
+

@@ -1,3 +1,7 @@
+/*jshint smarttabs:true */
+/*global $:false */
+/*global key:false */
+// checked with jshint
 $(document).ready(function() {
 
   function HideAll(){
@@ -13,7 +17,7 @@ $(document).ready(function() {
         url: '/api/docvisits/' + $("#visits").attr("data-name") + '/'+ $("#visits").attr("data-lastname"),
         type: 'GET',
         dataType: 'json',
-        success: function(response) {	
+        success: function(response) { 
           $("#docvisitstable").empty();
           $("#docvisitstable").append("<tr><th>Pacjent</th><th>Godzina</th><th>Dzień</th><th>Akcje</th></tr>");
           $.each(response.visits, function(key, value) {
@@ -32,7 +36,7 @@ $(document).ready(function() {
         error: function() {
         },
       });
-	});
+  });
 
  $('body').on("click", ".userinfo", function (e){
       e.preventDefault();
