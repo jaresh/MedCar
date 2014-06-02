@@ -3,6 +3,11 @@
 // checked with jshint
 $(document).ready(function() {
 
+    $('#content').hide();
+    $('#content').toggle("slow");
+    $('#main_menu').hide();
+    $('#main_menu').toggle("slow");
+
 	function ValidateAll(){
 	
 		if($("div[data-status='error']").text() !== ""){
@@ -14,6 +19,9 @@ $(document).ready(function() {
 	}
 
 	function StringValidate(str,errorel){
+
+        console.log(errorel);
+
 		if(str.match(/[^a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ0123456789]+/))
         {
             $(errorel).text("Nieprawidłowy znak.");
@@ -22,11 +30,12 @@ $(document).ready(function() {
         }
         else
         {
-            if($("#admindocform").length && $("#usersubmitbutton").text() == "Dodaj pacjenta")
+            if($("#admindocform").length)
             {
 
                 if(errorel == "#loginerror" || errorel == "#loginerror2")
                 {
+                    console.log("Jestem tutaj");
                      $.ajax({
                         url: '/api/findlogin/' + str,
                         type: 'GET',
@@ -71,13 +80,11 @@ $(document).ready(function() {
         {
             var peselnow = $('#adminuserform').attr("action").split("/");
 
-            if(str != peselnow[3])
-            {
-                $.ajax({
+            $.ajax({
                 url: '/api/userone/' + str,
                 type: 'GET',
                 success: function(response) { 
-                    if(response.docs)
+                    if(response.docs && peselnow[3] != str)
                     {
                         $(errorel).text("Podany pesel juz istnieje.");
                         $(errorel).attr("data-status","error");
@@ -94,15 +101,7 @@ $(document).ready(function() {
                 error: function(ErrorText) {
                     console.log(ErrorText);
                 },
-                });
-            }
-            else
-            {
-                $(errorel).attr("data-status","good");
-                $(errorel).prev().css("background-color","white");
-                $(errorel).text("");
-            }
-            
+            });        
         }
         ValidateAll();
 	}
@@ -123,13 +122,69 @@ $(document).ready(function() {
         ValidateAll();
 	}
 
+    function TitleValidate(str,errorel){
+        if(str.match(/[^a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ0123456789\s]+/) && str!="-")
+        {
+            $(errorel).text("Neprawidłowy znak.");
+            $(errorel).attr("data-status","error");
+            $(errorel).prev().css("background-color","#FFCCCC");
+        }
+        else
+        {
+            $(errorel).attr("data-status","good");
+            $(errorel).prev().css("background-color","white");
+            $(errorel).text("");
+        }
+        ValidateAll();
+    }
+
 // Menu style
 
-    $("[href]").each(function() {
-    if (this.href == window.location.href) {
-        $(this).css("border-bottom"," 1px solid #EBD89D");
-        $(this).css("background-color","#EBD89D");
+    $("#main_menu button").each(function() {
+        var link = window.location.href.split("/");
+
+        if(link[link.length-1] == "")
+            link[link.length-1] = "mainlink";
+
+        if ($(this).attr("id") == link[link.length-1]) {
+            $(this).css("border-bottom"," 2px solid #EEC853");
+            $(this).css("background-color","#EEC853");
         }
+    });
+
+    $('body').on("click", "#mainlink", function (){
+        $('#main_menu').toggle("slow");
+        $('#content').toggle("slow",function () {
+            window.location.replace("http://localhost:3000/");
+        });
+    });
+
+    $('body').on("click", "#patientpanel", function (){
+        $('#main_menu').toggle("slow");
+        $('#content').toggle("slow",function () {
+            window.location.replace("http://localhost:3000/patientpanel");
+        });
+    });
+
+    $('body').on("click", "#profile", function (){
+        $('#main_menu').toggle("slow");
+        $('#content').toggle("slow",function () {
+            window.location.replace("http://localhost:3000/profile");
+        });
+    });
+
+    $('body').on("click", "#adminpanel", function (){
+        $('#main_menu').toggle("slow");
+        $('#content').toggle("slow",function () {
+            window.location.replace("http://localhost:3000/adminpanel");
+        });
+    });
+
+    $('body').on("click", "#docpanel", function (){
+        $('#main_menu').toggle("slow");
+        $('#content').toggle("slow",function () {
+            window.location.replace("http://localhost:3000/docpanel");
+        });
     });
 
 // ------------------------
@@ -170,15 +225,15 @@ $(document).ready(function() {
         StringValidate($(this).val(),"#passworderror2");
     });
 
-    $('#adminuserform input[name="name"]').on('keyup change', function() {
+    $('#adminuserform input[name="nameuser"]').on('keyup change', function() {
         StringValidate($(this).val(),"#nameerror2");
     });
 
-    $('#adminuserform input[name="lastname"]').on('keyup change', function() {
+    $('#adminuserform input[name="lastnameuser"]').on('keyup change', function() {
         StringValidate($(this).val(),"#lastnameerror2");
     });
 
-    $('#adminuserform input[name="secondname"]').on('keyup change', function() {
+    $('#adminuserform input[name="secondnameuser"]').on('keyup change', function() {
         SecondnameValidate($(this).val(),"#secondnameerror2");
     });
 
@@ -187,5 +242,9 @@ $(document).ready(function() {
     });
 
 // ------------------------
+
+    $('#adminnewsform input[name="title"]').on('keyup change', function() {
+        TitleValidate($(this).val(),"#titleerror");
+    });
 
 });

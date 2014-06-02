@@ -2,23 +2,13 @@
 <html>
 	<head>
 		<% include partials/header %>
+		<script language="javascript" type="text/javascript" src="javascripts/index.js"></script>
 	</head> 
 <body>
 
 	<% include partials/menu %>   
 
-	<div id="content">
-		<% if (user.type == 'user') { %>
-			<p>Strona pacjenta</p>
-		<% } %>
-
-		<% if (user.type == 'admin') { %>
-			<p>Strona administratora</p>
-		<% } %>
-
-		<% if (user.type == 'doc') { %>
-			<p>Strona doktora</p>
-		<% } %>
+	<div id="content" style="font-weight:800">
 	</div>
 
 	<% include partials/footer %>   

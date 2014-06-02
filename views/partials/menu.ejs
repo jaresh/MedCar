@@ -1,17 +1,19 @@
 <h1>MedCar</h1>
+<img src="/images/cross.jpg" alt="Cross" height="100" width="100" style="position:absolute;top:10px;left:180px;
+	z-index:-1;">
 
 <div id="main_menu">
-	<a href="/"> Strona główna </a>
+	<button id="mainlink">Ogłoszenia</button>
 	<% if (user.type == 'user') { %>
-		<a href="patientpanel"> Panel pacjenta </a>
-		<a href="profile"> Dane osobowe </a>
+		<button id="patientpanel">Panel pacjenta</button>
+		<button id="profile">Dane osobowe</button>
 	<% } %>
 	<% if (user.type == 'admin') { %>
-		<a href="adminpanel"> Panel administratora </a>
+		<button id="adminpanel">Panel administratora</button>
 	<% } %>
 	<% if (user.type == 'doc') { %>
-		<a href="docpanel"> Panel doktora </a>
-		<a href="profile"> Dane osobowe </a>
+		<button id="docpanel">Panel doktora</button>
+		<button id="profile">Dane osobowe</button>
 	<% } %>
 </div>
 

@@ -14,8 +14,10 @@ $(document).ready(function() {
   function HideAll(){
     $("#docaddform").hide();
     $("#useraddform").hide();
+    $("#newsaddform").hide();
     $("#doclist").hide();
     $("#userlist").hide();
+    $("#newslist").hide();
   }
 
 
@@ -115,7 +117,115 @@ $(document).ready(function() {
       });
   }
 
+  function NewsListadmin(e){
+        $.ajax({
+          url: '/api/newsall',
+          type: 'GET',
+          dataType: 'json',
+          success: function(response) { 
+            $("#newstable").empty();
+            $("#newstable").append("<tr><th>Numer</th><th>Tytuł</th><th>Treść</th><th>Data utworzenia</th><th>Akcje</th></tr>");
+            $.each(response.docs, function(key,value) {
+
+              $("#newstable tbody").append(
+                "<tr>"+
+                  "<th>"+ value.number +"</th>"+
+                  "<th>"+ value.title +"</th>"+
+                  "<th>" + value.content + "</th>"+
+                  "<th>" + value.date + "</th>"+
+                  "<th>  <button class='newsdeletebtn' data-value="+ value.number + ">Usuń</button> <button class='newseditbtn' data-value="+ value.number + ">Edytuj</button> </th>"+
+                "</tr>"
+              );
+
+            });
+
+            HideAll();
+            $("#newslist").toggle("slow");
+          },
+          error: function() {
+            console.log("Błąd AJAX");
+          },
+        });
+  }
+
   HideAll();
+
+  /*
+  =============================
+      NEWS ADD,EDIT,DELETE FORM
+  =============================
+  */
+
+  //News add
+
+  $("#newsadd").click(function (e) {
+
+    $("#adminnewsform").attr("action",'/api/newsadd');
+    $("#newssubmitbutton").text("Dodaj ogłoszenie");
+
+    $("#adminnewsform input[name='title']").val("");
+    $("#adminnewsform input[name='newscontent']").val("");
+    e.preventDefault();
+    $.ajax({
+      url: '/api/newsnumber/',
+      type: 'GET',
+      success: function(response) { 
+        $("#adminnewsform input[name='number']").val(response.number);
+      },
+      error: function(ErrorText) {
+        console.log(ErrorText);
+      },
+    });
+
+    HideAll();
+    $('button[type="submit"]').attr("disabled", false);
+    $("#newsaddform").toggle("slow");
+  });
+
+  //News delete
+
+  $('body').on("click", ".newsdeletebtn", function (e){
+      e.preventDefault();
+      $.ajax({
+        url: '/api/newsdelete/' + $(this).attr("data-value"),
+        type: 'GET',
+        success: function() { 
+          HideAll();
+          NewsListadmin(e);
+        },
+        error: function(ErrorText) {
+          console.log(ErrorText);
+        },
+      });
+  });
+
+  //News edit
+
+  $('body').on("click", ".newseditbtn", function (e){
+    if($("#useraddform:visible"))
+      $("#useraddform").hide();
+
+    $("#newssubmitbutton").text("Edytuj ogłoszenie");
+    e.preventDefault();
+    $.ajax({
+      url: '/api/newsone/' + $(this).attr("data-value"),
+      type: 'GET',
+      success: function(response) { 
+
+        $("#adminnewsform input[name='number']").val(response.docs.number);
+        $("#adminnewsform input[name='title']").val(response.docs.title);
+        $("#adminnewsform textarea[name='newscontent']").val(response.docs.content);
+
+        $("#adminnewsform").attr("action",'/api/newsedit/' + response.docs.number);
+        $('button[type="submit"]').attr("disabled", false);
+
+        $("#newsaddform").toggle("slow");
+      },
+      error: function(ErrorText) {
+        console.log(ErrorText);
+      },
+    });
+  });
 
   /*
   =============================
@@ -134,31 +244,31 @@ $(document).ready(function() {
     $("#admindocform").attr("action",'/api/docadd');
     $("#docsumbitbutton").text("Dodaj lekarza");
 
-    $("#admindocform input[name='login']").attr("value","");
-    $("#admindocform input[name='name']").attr("value","");
-    $("#admindocform input[name='lastname']").attr("value","");
+    $("#admindocform input[name='login']").val("");
+    $("#admindocform input[name='name']").val("");
+    $("#admindocform input[name='lastname']").val("");
 
     $('#ponworking').prop('checked', false);
-    $('#admindocform input[name="ponbegin"]').attr('value','8');
-    $('#admindocform input[name="ponend"]').attr('value','8');
+    $('#admindocform input[name="ponbegin"]').val('8');
+    $('#admindocform input[name="ponend"]').val('8');
     $('#wtworking').prop('checked', false);
-    $('#admindocform input[name="wtbegin"]').attr('value','8');
-    $('#admindocform input[name="wtend"]').attr('value','8');
+    $('#admindocform input[name="wtbegin"]').val('8');
+    $('#admindocform input[name="wtend"]').val('8');
     $('#srworking').prop('checked', false);
-    $('#admindocform input[name="srbegin"]').attr('value','8');
-    $('#admindocform input[name="srend"]').attr('value','8');
+    $('#admindocform input[name="srbegin"]').val('8');
+    $('#admindocform input[name="srend"]').val('8');
     $('#czwworking').prop('checked', false);
-    $('#admindocform input[name="czwbegin"]').attr('value','8');
-    $('#admindocform input[name="czwend"]').attr('value','8');
+    $('#admindocform input[name="czwbegin"]').val('8');
+    $('#admindocform input[name="czwend"]').val('8');
     $('#piworking').prop('checked', false);
-    $('#admindocform input[name="pibegin"]').attr('value','8');
-    $('#admindocform input[name="piend"]').attr('value','8');
+    $('#admindocform input[name="pibegin"]').val('8');
+    $('#admindocform input[name="piend"]').val('8');
     $('#soworking').prop('checked', false);
-    $('#admindocform input[name="sobegin"]').attr('value','8');
-    $('#admindocform input[name="soend"]').attr('value','8');
+    $('#admindocform input[name="sobegin"]').val('8');
+    $('#admindocform input[name="soend"]').val('8');
     $('#niworking').prop('checked', false);
-    $('#admindocform input[name="nibegin"]').attr('value','8');
-    $('#admindocform input[name="niend"]').attr('value','8');
+    $('#admindocform input[name="nibegin"]').val('8');
+    $('#admindocform input[name="niend"]').val('8');
 
     HideAll();
     $('button[type="submit"]').attr("disabled", false);
@@ -194,15 +304,15 @@ $(document).ready(function() {
       url: '/api/docone/' + $(this).attr("data-name") + '/' + $(this).attr("data-lastname"),
       type: 'GET',
       success: function(response) { 
-        $("#admindocform input[name='login']").attr("value",response.docs.login);
-        $("#admindocform input[name='name']").attr("value",response.docs.name);
-        $("#admindocform input[name='lastname']").attr("value",response.docs.lastname);
+        $("#admindocform input[name='login']").val("");
+        $("#admindocform input[name='name']").val(response.docs.name);
+        $("#admindocform input[name='lastname']").val(response.docs.lastname);
         if(response.docs.workingdays.pon)
         {
           $('#ponworking').prop('checked', true);
           $('#1hours').show();
-          $('#admindocform input[name="ponbegin"]').attr('value',response.docs.workinghours.ponbegin);
-          $('#admindocform input[name="ponend"]').attr('value',response.docs.workinghours.ponend);
+          $('#admindocform input[name="ponbegin"]').val(response.docs.workinghours.ponbegin);
+          $('#admindocform input[name="ponend"]').val(response.docs.workinghours.ponend);
         }
         else
         {
@@ -213,8 +323,8 @@ $(document).ready(function() {
         {
           $('#wtworking').prop('checked', true);
           $('#2hours').show();
-          $('#admindocform input[name="wtbegin"]').attr('value',response.docs.workinghours.wtbegin);
-          $('#admindocform input[name="wtend"]').attr('value',response.docs.workinghours.wtend);
+          $('#admindocform input[name="wtbegin"]').val(response.docs.workinghours.wtbegin);
+          $('#admindocform input[name="wtend"]').val(response.docs.workinghours.wtend);
         }
         else
         {
@@ -225,8 +335,8 @@ $(document).ready(function() {
         {
           $('#srworking').prop('checked', true);
           $('#3hours').show();
-          $('#admindocform input[name="srbegin"]').attr('value',response.docs.workinghours.srbegin);
-          $('#admindocform input[name="srend"]').attr('value',response.docs.workinghours.srend);
+          $('#admindocform input[name="srbegin"]').val(response.docs.workinghours.srbegin);
+          $('#admindocform input[name="srend"]').val(response.docs.workinghours.srend);
         }
         else
         {
@@ -237,8 +347,8 @@ $(document).ready(function() {
         {
           $('#czwworking').prop('checked', true);
           $('#4hours').show();
-          $('#admindocform input[name="czwbegin"]').attr('value',response.docs.workinghours.czwbegin);
-          $('#admindocform input[name="czwend"]').attr('value',response.docs.workinghours.czwend);
+          $('#admindocform input[name="czwbegin"]').val(response.docs.workinghours.czwbegin);
+          $('#admindocform input[name="czwend"]').val(response.docs.workinghours.czwend);
         }
         else
         {
@@ -249,8 +359,8 @@ $(document).ready(function() {
         {
           $('#piworking').prop('checked', true);
           $('#5hours').show();
-          $('#admindocform input[name="pibegin"]').attr('value',response.docs.workinghours.pibegin);
-          $('#admindocform input[name="piend"]').attr('value',response.docs.workinghours.piend);
+          $('#admindocform input[name="pibegin"]').val(response.docs.workinghours.pibegin);
+          $('#admindocform input[name="piend"]').val(response.docs.workinghours.piend);
         }
         else
         {
@@ -261,8 +371,8 @@ $(document).ready(function() {
         {
           $('#soworking').prop('checked', true);
           $('#6hours').show();
-          $('#admindocform input[name="sobegin"]').attr('value',response.docs.workinghours.sobegin);
-          $('#admindocform input[name="soend"]').attr('value',response.docs.workinghours.soend);
+          $('#admindocform input[name="sobegin"]').val(response.docs.workinghours.sobegin);
+          $('#admindocform input[name="soend"]').val(response.docs.workinghours.soend);
         }
         else
         {
@@ -273,8 +383,8 @@ $(document).ready(function() {
         {
           $('#niworking').prop('checked', true);
           $('#7hours').show();
-          $('#admindocform input[name="nibegin"]').attr('value',response.docs.workinghours.nibegin);
-          $('#admindocform input[name="niend"]').attr('value',response.docs.workinghours.niend);
+          $('#admindocform input[name="nibegin"]').val(response.docs.workinghours.nibegin);
+          $('#admindocform input[name="niend"]').val(response.docs.workinghours.niend);
         }
         else
         {
@@ -304,12 +414,32 @@ $(document).ready(function() {
   $("#useradd").click(function () {
     $("#useraddform").attr("action",'/api/useradd');
     $("#usersubmitbutton").text("Dodaj pacjenta");
-    $("#adminuserform input[name='login']").attr("value","");
-    $("#adminuserform input[name='name']").attr("value","");
-    $("#adminuserform input[name='secondname']").attr("value","-");
-    $("#adminuserform input[name='lastname']").attr("value","");
-    $("#adminuserform input[name='pesel']").attr("value","");
-    $("#adminuserform input[name='dateofbirth']").attr("value","");
+    $("#adminuserform input[name='login']").val("");
+    $("#adminuserform input[name='nameuser']").val("");
+    $("#adminuserform input[name='secondnameuser']").val("-");
+    $("#adminuserform input[name='lastnameuser']").val("");
+    $("#adminuserform input[name='pesel']").val("");
+    $("#adminuserform input[name='dateofbirth']").val("");
+    $('#date').datepicker({
+      buttonImage: '/images/images.png',
+      buttonImageOnly: true,
+      showOn: "both",
+      changeMonth: true, 
+      changeYear: true, 
+      yearRange: '1900:2014',
+      monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec',
+      'Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
+      monthNamesShort: ['Sty','Lu','Mar','Kw','Maj','Cze','Lip',
+      'Sie','Wrz','Pa','Lis','Gru'],
+      dayNamesShort: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
+      dayNamesMin: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
+      dayNames: ['Niedziela','Poniedzialek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
+      maxDate: new Date(),
+      onSelect: function(dateText) {
+        var datetofind = dateText.split("/");
+        $("#currentdate").val(datetofind[2] + "-" + datetofind[1] + "-" + datetofind[0]);
+      }
+    });
     HideAll();
     $("#useraddform").toggle("slow");
   });
@@ -344,14 +474,35 @@ $(document).ready(function() {
       type: 'GET',
       success: function(response) { 
 
-        $("#adminuserform input[name='login']").attr("value",response.docs.login);
-        $("#adminuserform input[name='name']").attr("value",response.docs.name);
-        $("#adminuserform input[name='secondname']").attr("value",response.docs.secondname);
-        $("#adminuserform input[name='lastname']").attr("value",response.docs.lastname);
-        $("#adminuserform input[name='pesel']").attr("value",response.docs.pesel);
-        $("#adminuserform input[name='dateofbirth']").attr("value",response.docs.dateofbirth);
+        $("#adminuserform input[name='login']").val("");
+        $("#adminuserform input[name='password']").val("");
+        $("#adminuserform input[name='nameuser']").val(response.docs.name);
+        $("#adminuserform input[name='secondnameuser']").val(response.docs.secondname);
+        $("#adminuserform input[name='lastnameuser']").val(response.docs.lastname);
+        $("#adminuserform input[name='pesel']").val(response.docs.pesel);
+        $("#adminuserform input[name='dateofbirth']").val(response.docs.dateofbirth);
         $("#adminuserform").attr("action",'/api/useredit/' + response.docs.pesel);
         $('button[type="submit"]').attr("disabled", false);
+        $('#date').datepicker({
+          buttonImage: '/images/images.png',
+          buttonImageOnly: true,
+          showOn: "both",
+          changeMonth: true, 
+          changeYear: true, 
+          yearRange: '1900:2014',
+          monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec',
+          'Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
+          monthNamesShort: ['Sty','Lu','Mar','Kw','Maj','Cze','Lip',
+          'Sie','Wrz','Pa','Lis','Gru'],
+          dayNamesShort: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
+          dayNamesMin: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
+          dayNames: ['Niedziela','Poniedzialek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
+          maxDate: new Date(),
+          onSelect: function(dateText) {
+            var datetofind = dateText.split("/");
+            $("#currentdate").val(datetofind[2] + "-" + datetofind[1] + "-" + datetofind[0]);
+          }
+        });
         $("#useraddform").toggle("slow");
       },
       error: function(ErrorText) {
@@ -362,7 +513,7 @@ $(document).ready(function() {
 
   /*
   =============================
-          USER, DOC LIST
+        USER,NEWS,DOC LIST
   =============================
   */
 
@@ -374,6 +525,11 @@ $(document).ready(function() {
   $("#usershow").click(function(e){
     HideAll();
     UserList(e);
+  });
+
+  $("#newsshow").click(function(e){
+    HideAll();
+    NewsListadmin(e);
   });
 
   /*

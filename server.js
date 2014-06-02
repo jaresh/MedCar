@@ -42,7 +42,11 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./app/routes.js')(app, passport); 
+require('./app/routing/jsapinews.js')(app); 
+require('./app/routing/jsapivisits.js')(app); 
+require('./app/routing/jsapidocs.js')(app); 
+require('./app/routing/jsapiusers.js')(app); 
+require('./app/routing/routes.js')(app, passport); 
 
 app.listen(port);
 console.log('Server starts on port ' + port);

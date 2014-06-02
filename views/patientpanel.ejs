@@ -10,7 +10,7 @@
 
 	<div id="content">
 
-		<div id="userpanlemenu">
+		<div id="userpanelmenu">
 			<button id="visits" data-name="<%= user.name %>" data-lastname="<%= user.lastname %>">Historia wizyt</button>
 			<button id="docshow">Umów wizytę</button>
 		</div>
@@ -40,7 +40,8 @@
 					<input type="text" name="lastname" readonly>
 				</div>
 				<div id="visitdate" style="margin-top: 20px;">
-					Date: <input type="hidden" id="date">
+					<label style="margin-right: 51px;">Data</label>
+					<input type="hidden" id="date">
 					<input type="text" id="currentdate" name="date" value="" readonly>
 				</div>
 				<div id="visithours" style="margin-top: 20px;">

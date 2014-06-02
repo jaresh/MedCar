@@ -9,11 +9,13 @@
 	<% include partials/menu %>   
 
 	<div id="content">
-		<div id="adminpanlemenu">
+		<div id="adminpanelmenu">
 			<button id="docadd">Dodaj lekarza</button>
 			<button id="useradd">Dodaj pacjenta</button>
+			<button id="newsadd">Dodaj ogłoszenie</button>
 			<button id="docshow">Wyświetl lekarzy</button>
 			<button id="usershow">Wyświetl pacjentów</button>
+			<button id="newsshow">Wyświetl ogłoszenia</button>
 		</div>
 
 		<div id="doclist" style="margin-top: 30px;">
@@ -23,6 +25,11 @@
 
 		<div id="userlist" style="margin-top: 30px;">
 			<table id="usertable">
+			</table>
+		</div>
+
+		<div id="newslist" style="margin-top: 30px;">
+			<table id="newstable">
 			</table>
 		</div>
 
@@ -119,22 +126,22 @@
 				</div>
 				<div style="margin-bottom:20px;">
 					<label>Hasło do panelu</label>
-					<input type="password" name="password">
+					<input type="password" name="password" value="">
 					<div id="passworderror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
 					<label style="margin-right: 90px;">Imię</label>
-					<input type="text" name="name" value="">
+					<input type="text" name="nameuser" value="">
 					<div id="nameerror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
 					<label style="margin-right: 38px;">Drugie imię</label>
-					<input type="text" name="secondname" value="-">
+					<input type="text" name="secondnameuser" value="-">
 					<div id="secondnameerror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
 					<label style="margin-right: 50px;">Nazwisko</label>
-					<input type="text" name="lastname" value="">
+					<input type="text" name="lastnameuser" value="">
 					<div id="lastnameerror2" data-status="good"></div>
 				</div>
 				<div style="margin-bottom:20px;">
@@ -142,13 +149,38 @@
 					<input type="text" name="pesel" value="">
 					<div id="peselerror" data-status="good"></div>
 				</div>
-				<div style="margin-bottom:20px;">
-					<label style="margin-right: 8px;">Data urodzenia</label>
-					<input type="date" name="dateofbirth" value="">
+				<div id="visitdate" style="margin-top: 20px; margin-bottom:20px;">
+					<label style="margin-right: 51px;">Data</label>
+					<input type="hidden" id="date">
+					<input type="text" id="currentdate" name="dateofbirth" value="" style="background-color:#CACACA;" readonly>
 				</div>
 				
 
 				<button id="usersubmitbutton" type="submit">Dodaj pacjenta</button>
+
+			</form>
+		
+		</div>
+
+		<div id="newsaddform">
+			<h2> Formularz ogłoszeń </h2>
+			<form action="/api/newsadd" method="post" id="adminnewsform">
+
+				<div style="margin-bottom:20px;">
+					<label style="margin-right: 51px;">Numer ogłoszenia</label>
+					​<input type="text" name="number" value="" style="background-color:#CACACA;" readonly>
+				</div>
+				<div style="margin-bottom:20px;">
+					<label style="margin-right: 53px;">Tytuł</label>
+					<input type="text" name="title" value="">
+					<div id="titleerror" data-status="good"></div>
+				</div>
+				<div style="margin-bottom:20px;">
+					<label style="margin-right: 51px;">Treść</label>
+					​<textarea name="newscontent" rows="10" cols="80"></textarea>
+				</div>
+				
+				<button id="newssubmitbutton" type="submit">Dodaj ogłoszenie</button>
 
 			</form>
 		
