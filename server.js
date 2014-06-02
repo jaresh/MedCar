@@ -21,7 +21,6 @@ var sessionStore = new connect.session.MemoryStore();
 var sessionSecret = 'wielkiSekret44';
 var sessionKey = 'connect.sid';
 
-//== config
 mongoose.connect('mongodb://localhost/test'); 
 
 require('./config/passport')(passport); 
@@ -50,4 +49,3 @@ require('./app/routing/routes.js')(app, passport);
 
 app.listen(port);
 console.log('Server starts on port ' + port);
-
