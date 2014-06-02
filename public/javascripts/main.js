@@ -3,10 +3,10 @@
 // checked with jshint
 $(document).ready(function() {
 
-    $('#content').hide();
-    $('#content').toggle("slow");
-    $('#main_menu').hide();
-    $('#main_menu').toggle("slow");
+    $(document.getElementById("content")).hide();
+    $(document.getElementById("content")).toggle("slow");
+    $(document.getElementById("main_menu")).hide();
+    $(document.getElementById("main_menu")).toggle("slow");
 
 	function ValidateAll(){
 	
@@ -143,7 +143,7 @@ $(document).ready(function() {
     $("#main_menu button").each(function() {
         var link = window.location.href.split("/");
 
-        if(link[link.length-1] == "")
+        if(link[link.length-1] === "")
             link[link.length-1] = "mainlink";
 
         if ($(this).attr("id") == link[link.length-1]) {
@@ -153,35 +153,35 @@ $(document).ready(function() {
     });
 
     $('body').on("click", "#mainlink", function (){
-        $('#main_menu').toggle("slow");
+        $(document.getElementById("main_menu")).toggle("slow");
         $('#content').toggle("slow",function () {
             window.location.replace("http://localhost:3000/");
         });
     });
 
     $('body').on("click", "#patientpanel", function (){
-        $('#main_menu').toggle("slow");
+        $(document.getElementById("main_menu")).toggle("slow");
         $('#content').toggle("slow",function () {
             window.location.replace("http://localhost:3000/patientpanel");
         });
     });
 
     $('body').on("click", "#profile", function (){
-        $('#main_menu').toggle("slow");
+        $(document.getElementById("main_menu")).toggle("slow");
         $('#content').toggle("slow",function () {
             window.location.replace("http://localhost:3000/profile");
         });
     });
 
     $('body').on("click", "#adminpanel", function (){
-        $('#main_menu').toggle("slow");
+        $(document.getElementById("main_menu")).toggle("slow");
         $('#content').toggle("slow",function () {
             window.location.replace("http://localhost:3000/adminpanel");
         });
     });
 
     $('body').on("click", "#docpanel", function (){
-        $('#main_menu').toggle("slow");
+        $(document.getElementById("main_menu")).toggle("slow");
         $('#content').toggle("slow",function () {
             window.location.replace("http://localhost:3000/docpanel");
         });

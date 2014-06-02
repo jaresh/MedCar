@@ -14,10 +14,10 @@ $(document).ready(function() {
 */
 
 function HideAll(){
-    $("#myvisits").hide();
-    $("#uservisitaddform").hide();
-    $("#doclist").hide();
-    $("#visithours").hide();
+    $(document.getElementById("myvisits")).hide();
+    $(document.getElementById("uservisitaddform")).hide();
+    $(document.getElementById("doclist")).hide();
+    $(document.getElementById("visithours")).hide();
   }
 
   function DocList(e){
@@ -73,7 +73,7 @@ function HideAll(){
 
           $("#doctable").append(htmltoadd);
           HideAll();
-          $("#doclist").toggle("slow");
+          $(document.getElementById("doclist")).toggle("slow");
         },
         error: function(ErrorText) {
           console.log(ErrorText);
@@ -104,7 +104,7 @@ function HideAll(){
 
           $("#uservisitstable").append(htmltoadd);
           HideAll();
-          $("#myvisits").toggle("slow");
+          $(document.getElementById("myvisits")).toggle("slow");
         },
         error: function() {
         },
@@ -309,7 +309,7 @@ function HideAll(){
                     });
                   }
 
-                  $("#visithours").toggle("slow");
+                  $(document.getElementById("visithours")).toggle("slow");
 
                 },
                 error: function() {
@@ -319,9 +319,9 @@ function HideAll(){
             }
           });
 
-          $("#uservisitaddform").hide();
+          $(document.getElementById("uservisitaddform")).hide();
 
-          $("#uservisitaddform").toggle("slow");
+          $(document.getElementById("uservisitaddform")).toggle("slow");
         },
         error: function(ErrorText) {
           console.log(ErrorText);

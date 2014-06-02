@@ -12,12 +12,12 @@ $(document).ready(function() {
 */
 
   function HideAll(){
-    $("#docaddform").hide();
-    $("#useraddform").hide();
-    $("#newsaddform").hide();
-    $("#doclist").hide();
-    $("#userlist").hide();
-    $("#newslist").hide();
+    $(document.getElementById("docaddform")).hide();
+    $(document.getElementById("useraddform")).hide();
+    $(document.getElementById("newsaddform")).hide();
+    $(document.getElementById("doclist")).hide();
+    $(document.getElementById("userlist")).hide();
+    $(document.getElementById("newslist")).hide();
   }
 
 
@@ -46,7 +46,7 @@ $(document).ready(function() {
           $("#usertable").append(htmltoadd);
           
           HideAll();
-          $("#userlist").toggle("slow");
+          $(document.getElementById("userlist")).toggle("slow");
         },
         error: function() {
           console.log("Błąd AJAX");
@@ -110,7 +110,7 @@ $(document).ready(function() {
           $("#doctable").append(htmltoadd);
 
           HideAll();
-          $("#doclist").toggle("slow");
+          $(document.getElementById("doclist")).toggle("slow");
         },
         error: function() {
           console.log("Błąd AJAX");
@@ -119,6 +119,7 @@ $(document).ready(function() {
   }
 
   function NewsListadmin(e){
+        e.preventDefault();
         $.ajax({
           url: '/api/newsall',
           type: 'GET',
@@ -142,7 +143,7 @@ $(document).ready(function() {
             $("#newstable").append(htmltoadd);
 
             HideAll();
-            $("#newslist").toggle("slow");
+            $(document.getElementById("newslist")).toggle("slow");
           },
           error: function() {
             console.log("Błąd AJAX");
@@ -181,7 +182,7 @@ $(document).ready(function() {
 
     HideAll();
     $('button[type="submit"]').attr("disabled", false);
-    $("#newsaddform").toggle("slow");
+    $(document.getElementById("newsaddform")).toggle("slow");
   });
 
   //News delete
@@ -205,7 +206,7 @@ $(document).ready(function() {
 
   $('body').on("click", ".newseditbtn", function (e){
     if($("#useraddform:visible"))
-      $("#useraddform").hide();
+      $(document.getElementById("useraddform")).hide();
 
     $("#newssubmitbutton").text("Edytuj ogłoszenie");
     e.preventDefault();
@@ -221,7 +222,7 @@ $(document).ready(function() {
         $("#adminnewsform").attr("action",'/api/newsedit/' + response.docs.number);
         $('button[type="submit"]').attr("disabled", false);
 
-        $("#newsaddform").toggle("slow");
+        $(document.getElementById("newsaddform")).toggle("slow");
       },
       error: function(ErrorText) {
         console.log(ErrorText);
@@ -240,7 +241,7 @@ $(document).ready(function() {
   $("#docadd").click(function () {
 
     for(var i = 1 ; i < 8; i++){
-      $("#" + i + "hours").hide();
+      $(document.getElementById(i + "hours")).hide();
     }
 
     $("#admindocform").attr("action",'/api/docadd');
@@ -274,7 +275,7 @@ $(document).ready(function() {
 
     HideAll();
     $('button[type="submit"]').attr("disabled", false);
-    $("#docaddform").toggle("slow");
+    $(document.getElementById("docaddform")).toggle("slow");
   });
 
   //Doc delete
@@ -298,7 +299,7 @@ $(document).ready(function() {
 
   $('body').on("click", ".doceditbtn", function (e){
     if($("#docaddform:visible"))
-      $("#docaddform").hide();
+      $(document.getElementById("docaddform")).hide();
 
     $("#docsumbitbutton").text("Edytuj lekarza");
     e.preventDefault();
@@ -312,92 +313,92 @@ $(document).ready(function() {
         if(response.docs.workingdays.pon)
         {
           $('#ponworking').prop('checked', true);
-          $('#1hours').show();
+          $(document.getElementById("1hours")).show();
           $('#admindocform input[name="ponbegin"]').val(response.docs.workinghours.ponbegin);
           $('#admindocform input[name="ponend"]').val(response.docs.workinghours.ponend);
         }
         else
         {
           $('#ponworking').prop('checked', false);
-          $('#1hours').hide();
+          $(document.getElementById("1hours")).hide();
         }
         if(response.docs.workingdays.wt)
         {
           $('#wtworking').prop('checked', true);
-          $('#2hours').show();
+          $(document.getElementById("2hours")).show();
           $('#admindocform input[name="wtbegin"]').val(response.docs.workinghours.wtbegin);
           $('#admindocform input[name="wtend"]').val(response.docs.workinghours.wtend);
         }
         else
         {
           $('#wtworking').prop('checked', false);
-          $('#2hours').hide();
+          $(document.getElementById("2hours")).hide();
         }
         if(response.docs.workingdays.sr)
         {
           $('#srworking').prop('checked', true);
-          $('#3hours').show();
+          $(document.getElementById("3hours")).show();
           $('#admindocform input[name="srbegin"]').val(response.docs.workinghours.srbegin);
           $('#admindocform input[name="srend"]').val(response.docs.workinghours.srend);
         }
         else
         {
           $('#srworking').prop('checked', false);
-          $('#3hours').hide();
+          $(document.getElementById("3hours")).hide();
         }
         if(response.docs.workingdays.czw)
         {
           $('#czwworking').prop('checked', true);
-          $('#4hours').show();
+          $(document.getElementById("4hours")).show();
           $('#admindocform input[name="czwbegin"]').val(response.docs.workinghours.czwbegin);
           $('#admindocform input[name="czwend"]').val(response.docs.workinghours.czwend);
         }
         else
         {
           $('#czwworking').prop('checked', false);
-          $('#4hours').hide();
+          $(document.getElementById("4hours")).hide();
         }
         if(response.docs.workingdays.pi)
         {
           $('#piworking').prop('checked', true);
-          $('#5hours').show();
+          $(document.getElementById("5hours")).show();
           $('#admindocform input[name="pibegin"]').val(response.docs.workinghours.pibegin);
           $('#admindocform input[name="piend"]').val(response.docs.workinghours.piend);
         }
         else
         {
           $('#piworking').prop('checked', false);
-          $('#5hours').hide();
+          $(document.getElementById("5hours")).hide();
         }
         if(response.docs.workingdays.so)
         {
           $('#soworking').prop('checked', true);
-          $('#6hours').show();
+          $(document.getElementById("6hours")).show();
           $('#admindocform input[name="sobegin"]').val(response.docs.workinghours.sobegin);
           $('#admindocform input[name="soend"]').val(response.docs.workinghours.soend);
         }
         else
         {
           $('#soworking').prop('checked', false);
-          $('#6hours').hide();
+          $(document.getElementById("6hours")).hide();
         }
         if(response.docs.workingdays.ni)
         {
           $('#niworking').prop('checked', true);
-          $('#7hours').show();
+          $(document.getElementById("7hours")).show();
           $('#admindocform input[name="nibegin"]').val(response.docs.workinghours.nibegin);
           $('#admindocform input[name="niend"]').val(response.docs.workinghours.niend);
         }
         else
         {
           $('#niworking').prop('checked', false);
-          $('#7hours').hide();
+          $(document.getElementById("7hours")).hide();
         }
 
         $("#admindocform").attr("action",'/api/docedit/' + response.docs.name + '/' + response.docs.lastname);
 
         $('button[type="submit"]').attr("disabled", false);
-        $("#docaddform").toggle("slow");
+        $(document.getElementById("docaddform")).toggle("slow");
       },
       error: function(ErrorText) {
         console.log(ErrorText);
@@ -443,7 +444,7 @@ $(document).ready(function() {
       }
     });
     HideAll();
-    $("#useraddform").toggle("slow");
+    $(document.getElementById("useraddform")).toggle("slow");
   });
 
   //User delete
@@ -467,7 +468,7 @@ $(document).ready(function() {
 
   $('body').on("click", ".usereditbtn", function (e){
     if($("#useraddform:visible"))
-      $("#useraddform").hide();
+      $(document.getElementById("useraddform")).hide();
 
     $("#usersubmitbutton").text("Edytuj pacjenta");
     e.preventDefault();
@@ -505,7 +506,7 @@ $(document).ready(function() {
             $("#currentdate").val(datetofind[2] + "-" + datetofind[1] + "-" + datetofind[0]);
           }
         });
-        $("#useraddform").toggle("slow");
+        $(document.getElementById("useraddform")).toggle("slow");
       },
       error: function(ErrorText) {
         console.log(ErrorText);
@@ -541,31 +542,31 @@ $(document).ready(function() {
   */
 
   $('#ponworking').click(function () {
-    $("#1hours").toggle("slow");
+    $(document.getElementById("1hours")).toggle("slow");
   });
 
   $('#wtworking').click(function () {
-    $("#2hours").toggle("slow");
+    $(document.getElementById("2hours")).toggle("slow");
   });
 
   $('#srworking').click(function () {
-    $("#3hours").toggle("slow");
+    $(document.getElementById("3hours")).toggle("slow");
   });
 
   $('#czwworking').click(function () {
-    $("#4hours").toggle("slow");
+    $(document.getElementById("4hours")).toggle("slow");
   });
 
   $('#piworking').click(function () {
-    $("#5hours").toggle("slow");
+    $(document.getElementById("5hours")).toggle("slow");
   });
 
   $('#soworking').click(function () {
-    $("#6hours").toggle("slow");
+    $(document.getElementById("6hours")).toggle("slow");
   });
 
   $('#niworking').click(function () {
-    $("#7hours").toggle("slow");
+    $(document.getElementById("7hours")).toggle("slow");
   });
 
 });
