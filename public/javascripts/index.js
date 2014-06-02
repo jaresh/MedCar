@@ -10,11 +10,13 @@ $(document).ready(function() {
           dataType: 'json',
           success: function(response) { 
             $("#content").empty();
+            var htmltoadd = "";
             $.each(response.docs, function(key,value) {
 
-                $("#content").append("<h2>"+ value.title +"</h2>" + "<p>"+ value.date + "</p><br>" + value.content +"</p><hr>");
+                htmltoadd = htmltoadd + "<h2>"+ value.title +"</h2>" + "<p>"+ value.date + "</p><br>" + value.content +"</p><hr>";
 
             });
+            $("#content").append(htmltoadd);
           },
           error: function() {
             console.log("Błąd AJAX");

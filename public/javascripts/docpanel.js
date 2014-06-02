@@ -19,17 +19,18 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(response) { 
           $("#docvisitstable").empty();
-          $("#docvisitstable").append("<tr><th>Pacjent</th><th>Godzina</th><th>Dzień</th><th>Akcje</th></tr>");
+          var htmltoadd = "<tr><th>Pacjent</th><th>Godzina</th><th>Dzień</th><th>Akcje</th></tr>";
           $.each(response.visits, function(key, value) {
-              $("#docvisitstable tbody").append(
+              htmltoadd = htmltoadd +
                 "<tr>"+
                   "<th>"+ value.patient +"</th>"+
                   "<th>"+ value.hour +"</th>"+
                   "<th>" + value.day + "</th>"+
                   "<th>  <button class='userinfo' data-value='"+ value.patient + "'>Szczegółowe dane pacjenta</button></th>"+
-                "</tr>"
-              );
+                "</tr>";
           });
+
+          $("#docvisitstable").append(htmltoadd);
           HideAll();
           $("#myvisits").toggle("slow");
         },

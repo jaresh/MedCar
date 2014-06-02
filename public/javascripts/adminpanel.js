@@ -29,21 +29,22 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(response) { 
           $("#usertable").empty();
-          $("#usertable").append("<tr><th>Imie</th><th>Nazwisko</th><th>Pesel</th><th>Data urodzenia</th><th>Akcje</th></tr>");
+          var htmltoadd = "<tr><th>Imie</th><th>Nazwisko</th><th>Pesel</th><th>Data urodzenia</th><th>Akcje</th></tr>";
           $.each(response.docs, function(key,value) {
 
-              $("#usertable tbody").append(
+              htmltoadd = htmltoadd +
                 "<tr>"+
                   "<th>"+ value.name +"</th>"+
                   "<th>"+ value.lastname +"</th>"+
                   "<th>" + value.pesel + "</th>"+
                   "<th>" + value.dateofbirth + "</th>"+
                   "<th>  <button class='userdeletebtn' data-value="+ value.pesel + ">Usuń</button> <button class='usereditbtn' data-value="+ value.pesel + ">Edytuj</button> </th>"+
-                "</tr>"
-              );
+                "</tr>";
 
           });
-
+        
+          $("#usertable").append(htmltoadd);
+          
           HideAll();
           $("#userlist").toggle("slow");
         },
@@ -61,10 +62,8 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(response) { 
           $("#doctable").empty();
-          $("#doctable").append("<tr><th>Imie</th><th>Nazwisko</th> <th>Dnie pracujące</th><th>Akcje</th></tr>");
+          var htmltoadd ="<tr><th>Imie</th><th>Nazwisko</th> <th>Dnie pracujące</th><th>Akcje</th></tr>";
           $.each(response.docs, function(key,value) {
-
-            console.log(response.docs);
 
             var workingdays = "";
 
@@ -99,15 +98,17 @@ $(document).ready(function() {
                 workingdays = "niedziela, " + workingdays ;
               }
             });
-              $("#doctable tbody").append(
+              htmltoadd = htmltoadd + 
                 "<tr>"+
                   "<th>"+ value.name +"</th>"+
                   "<th>"+ value.lastname +"</th>"+
                   "<th>" + workingdays + "</th>"+
                   "<th>  <button class='docdeletebtn' data-name='"+ value.name + "' data-lastname='" + value.lastname + "'>Usuń</button> <button class='doceditbtn' data-name='"+ value.name + "' data-lastname='" + value.lastname + "'>Edytuj</button> </th>"+
-                "</tr>"
-              );
+                "</tr>";
           });
+          
+          $("#doctable").append(htmltoadd);
+
           HideAll();
           $("#doclist").toggle("slow");
         },
@@ -124,20 +125,21 @@ $(document).ready(function() {
           dataType: 'json',
           success: function(response) { 
             $("#newstable").empty();
-            $("#newstable").append("<tr><th>Numer</th><th>Tytuł</th><th>Treść</th><th>Data utworzenia</th><th>Akcje</th></tr>");
+            var htmltoadd = "<tr><th>Numer</th><th>Tytuł</th><th>Treść</th><th>Data utworzenia</th><th>Akcje</th></tr>";
             $.each(response.docs, function(key,value) {
 
-              $("#newstable tbody").append(
+              htmltoadd = htmltoadd +
                 "<tr>"+
                   "<th>"+ value.number +"</th>"+
                   "<th>"+ value.title +"</th>"+
                   "<th>" + value.content + "</th>"+
                   "<th>" + value.date + "</th>"+
                   "<th>  <button class='newsdeletebtn' data-value="+ value.number + ">Usuń</button> <button class='newseditbtn' data-value="+ value.number + ">Edytuj</button> </th>"+
-                "</tr>"
-              );
+                "</tr>";
 
             });
+
+            $("#newstable").append(htmltoadd);
 
             HideAll();
             $("#newslist").toggle("slow");

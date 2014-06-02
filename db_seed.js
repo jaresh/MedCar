@@ -3,10 +3,10 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test'); 
 
-var User = require('../App/app/models/user');
-var Admin = require('../App/app/models/admin');
-var Doc = require('../App/app/models/doc');
-var Visit = require('../App/app/models/visit');
+var User = require('./app/models/user');
+var Admin = require('./app/models/admin');
+var Doc = require('./app/models/doc');
+var Visit = require('./app/models/visit');
 
 //User admin
 var newAdmin = new Admin();

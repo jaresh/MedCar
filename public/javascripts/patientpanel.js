@@ -27,7 +27,7 @@ function HideAll(){
         type: 'GET',
         success: function(response) { 
           $("#doctable").empty();
-          $("#doctable").append("<tr><th>Imie</th><th>Nazwisko</th> <th>Dnie pracujące</th><th>Akcje</th></tr>");
+          var htmltoadd = "<tr><th>Imie</th><th>Nazwisko</th> <th>Dnie pracujące</th><th>Akcje</th></tr>";
           $.each(response.docs, function(key, value) {
             var workingdays = "";
 
@@ -62,15 +62,16 @@ function HideAll(){
                 workingdays = "niedziela, " + workingdays ;
               }
             });
-              $("#doctable tbody").append(
+              htmltoadd = htmltoadd + 
                 "<tr>"+
                   "<th>"+ value.name +"</th>"+
                   "<th>"+ value.lastname +"</th>"+
                   "<th>" + workingdays + "</th>"+
                   "<th>  <button class='docvisitbtn' data-name='"+ value.name + "' data-lastname='" + value.lastname + "'>Umów wizytę</button></th>"+
-                "</tr>"
-              );
+                "</tr>";
           });
+
+          $("#doctable").append(htmltoadd);
           HideAll();
           $("#doclist").toggle("slow");
         },
@@ -91,16 +92,17 @@ function HideAll(){
         dataType: 'json',
         success: function(response) { 
           $("#uservisitstable").empty();
-          $("#uservisitstable").append("<tr><th>Lekarz</th><th>Godzina</th><th>Dzień</th></tr>");
+          var htmltoadd = "<tr><th>Lekarz</th><th>Godzina</th><th>Dzień</th></tr>";
           $.each(response.visits, function(key, value) {
-              $("#uservisitstable tbody").append(
+              htmltoadd = htmltoadd + 
                 "<tr>"+
                   "<th>"+ value.doc +"</th>"+
                   "<th>"+ value.hour +"</th>"+
                   "<th>" + value.day + "</th>"+
-                "</tr>"
-              );
+                "</tr>";
           });
+
+          $("#uservisitstable").append(htmltoadd);
           HideAll();
           $("#myvisits").toggle("slow");
         },
@@ -253,54 +255,52 @@ function HideAll(){
 
                   var currentdate = $('#date').datepicker('getDate');
                   var dayOfWeek = currentdate.getUTCDay();
-
-                  if(dayOfWeek == 0)
-                  {
-                    var dochoursbegin = ponbegin;
-                    var dochoursend = ponend;
+                  
+                  switch(dayOfWeek) {
+                    case 0:
+                      dochoursbegin = ponbegin;
+                      dochoursend = ponend;
+                      break;
+                    case 1:
+                      dochoursbegin = wtbegin;
+                      dochoursend = wtend;
+                      break;
+                    case 2:
+                      dochoursbegin = srbegin;
+                      dochoursend = srend;
+                      break;
+                    case 3:
+                      dochoursbegin = czwbegin;
+                      dochoursend = czwend;
+                      break;
+                    case 4:
+                      dochoursbegin = pibegin;
+                      dochoursend = piend;
+                      break;
+                    case 5:
+                      dochoursbegin = sobegin;
+                      dochoursend = soend;
+                      break;
+                     case 6:
+                      dochoursbegin = nibegin;
+                      dochoursend = niend;
+                      break;   
                   }
-                  if(dayOfWeek == 1)
-                  {
-                    var dochoursbegin = wtbegin;
-                    var dochoursend = wtend;
-                  }
-                  if(dayOfWeek == 2)
-                  {
-                    var dochoursbegin = srbegin;
-                    var dochoursend = srend;
-                  }
-                  if(dayOfWeek == 3)
-                  {
-                    var dochoursbegin = czwbegin;
-                    var dochoursend = czwend;
-                  }
-                  if(dayOfWeek == 4)
-                  {
-                    var dochoursbegin = pibegin;
-                    var dochoursend = piend;
-                  }
-                  if(dayOfWeek == 5)
-                  {
-                    var dochoursbegin = sobegin;
-                    var dochoursend = soend;
-                  }
-                  if(dayOfWeek == 6)
-                  {
-                    var dochoursbegin = nibegin;
-                    var dochoursend = niend;
-                  }
-
-                  $("#visithour").append("<option value='-'>-</option>");
+                  
+                  var htmltoadd = "<option value='-'>-</option>";
 
                   for(var i = dochoursbegin; i < dochoursend; i++)
                   {
-                    $("#visithour").append("<option value='" + i + ':' + '00' + "'>" + i + ':' + '00' + "</option>");
-                    $("#visithour").append("<option value='" + i + ':' + '10' + "'>" + i + ':' + '10' + "</option>");
-                    $("#visithour").append("<option value='" + i + ':' + '20' + "'>" + i + ':' + '20' + "</option>");
-                    $("#visithour").append("<option value='" + i + ':' + '30' + "'>" + i + ':' + '30' + "</option>");
-                    $("#visithour").append("<option value='" + i + ':' + '40' + "'>" + i + ':' + '40' + "</option>");
-                    $("#visithour").append("<option value='" + i + ':' + '50' + "'>" + i + ':' + '50' + "</option>");
+                    htmltoadd = htmltoadd + 
+                    "<option value='" + i + ':' + '00' + "'>" + i + ':' + '00' + "</option>"+
+                    "<option value='" + i + ':' + '10' + "'>" + i + ':' + '10' + "</option>"+
+                    "<option value='" + i + ':' + '20' + "'>" + i + ':' + '20' + "</option>"+
+                    "<option value='" + i + ':' + '30' + "'>" + i + ':' + '30' + "</option>"+
+                    "<option value='" + i + ':' + '40' + "'>" + i + ':' + '40' + "</option>"+
+                    "<option value='" + i + ':' + '50' + "'>" + i + ':' + '50' + "</option>";
                   }
+
+                  $("#visithour").append(htmltoadd);
 
                   if(hourstodelete)
                   {
