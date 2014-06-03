@@ -5,8 +5,6 @@
 
 $(document).ready(function() {
 
-  
-
 /*
 =============================
         FUNCTIONS
@@ -14,6 +12,7 @@ $(document).ready(function() {
 */
 
 function HideAll(){
+    $(document.getElementById("myvisitshistory")).hide();
     $(document.getElementById("myvisits")).hide();
     $(document.getElementById("uservisitaddform")).hide();
     $(document.getElementById("doclist")).hide();
@@ -86,20 +85,24 @@ function HideAll(){
 
   $("#visits").click(function(e){
       e.preventDefault();
+      
+      var today = new Date();
+
       $.ajax({
-        url: '/api/uservisits/' + $("#visits").attr("data-name") + '/'+ $("#visits").attr("data-lastname"),
+        url: '/api/uservisits/' + $("#visitshistory").attr("data-name") + '/'+ $("#visitshistory").attr("data-lastname"),
         type: 'GET',
         dataType: 'json',
         success: function(response) { 
           $("#uservisitstable").empty();
-          var htmltoadd = "<tr><th>Lekarz</th><th>Godzina</th><th>Dzień</th></tr>";
+          var htmltoadd = "<tr><th>Lekarz</th><th>Godzina</th><th>Dzień</th><th>Akcje</th></tr>";
           $.each(response.visits, function(key, value) {
-              htmltoadd = htmltoadd + 
-                "<tr>"+
-                  "<th>"+ value.doc +"</th>"+
-                  "<th>"+ value.hour +"</th>"+
-                  "<th>" + value.day + "</th>"+
-                "</tr>";
+
+              var todaycompare  = new Date(value.day);
+
+              if(today < todaycompare)
+                htmltoadd = htmltoadd + "<tr>"+"<th>"+ value.doc +"</th>"+"<th>"+ value.hour +"</th>"+"<th>" + 
+                value.day + "</th>"+"<th><button class='visitdeletebtn' data-doc='"+ 
+                value.doc + "' data-patient='" + value.patient + "' data-day='" + value.day + "' data-hour='" + value.hour + "'>Odmów wizytę</button></th>"+"</tr>";
           });
 
           $("#uservisitstable").append(htmltoadd);
@@ -107,6 +110,50 @@ function HideAll(){
           $(document.getElementById("myvisits")).toggle("slow");
         },
         error: function() {
+        },
+      });
+  });
+
+  $("#visitshistory").click(function(e){
+      e.preventDefault();
+      
+      var today = new Date();
+
+      $.ajax({
+        url: '/api/uservisits/' + $("#visitshistory").attr("data-name") + '/'+ $("#visitshistory").attr("data-lastname"),
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) { 
+          $("#uservisitshistorytable").empty();
+          var htmltoadd = "<tr><th>Lekarz</th><th>Godzina</th><th>Dzień</th></tr>";
+          $.each(response.visits, function(key, value) {
+
+              var todaycompare = new Date(value.day);
+
+              if(today >= todaycompare)
+              htmltoadd = htmltoadd + "<tr>"+"<th>"+ value.doc +"</th>"+"<th>"+ value.hour +"</th>"+"<th>" + value.day + "</th>"+"</tr>";
+          });
+
+          $("#uservisitshistorytable").append(htmltoadd);
+          HideAll();
+          $(document.getElementById("myvisitshistory")).toggle("slow");
+        },
+        error: function() {
+        },
+      });
+  });
+
+  $('body').on("click", ".visitdeletebtn", function (e){
+      e.preventDefault();
+      $.ajax({
+        url: '/api/visitdelete/' + $(this).attr("data-doc") + "/" + $(this).attr("data-patient") + "/" + $(this).attr("data-day") + "/" + $(this).attr("data-hour"),
+        type: 'GET',
+        success: function() { 
+          HideAll();
+          NewsListadmin(e);
+        },
+        error: function(ErrorText) {
+          console.log(ErrorText);
         },
       });
   });
@@ -225,7 +272,7 @@ function HideAll(){
             dayNamesShort: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
             dayNamesMin: [ "Ni", "Pon", "Wt", "Śr", "Czw", "Pi", "So" ],
             dayNames: ['Niedziela','Poniedzialek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
-            minDate: 0,
+            minDate: 1,
             onSelect: function(dateText) {
               var datetofind = dateText.split("/");
 
@@ -234,10 +281,10 @@ function HideAll(){
 
               $("#visithour").empty();
 
-              $("#currentdate").attr("value",datetofind[2] + "-" + datetofind[1] + "-" + datetofind[0]);
+              $("#currentdate").attr("value",datetofind[2] + "-" + datetofind[0] + "-" + datetofind[1]);
 
               $.ajax({
-                url: '/api/getvisitbydate/' + response.docs.name + "/" + response.docs.lastname + "/" + datetofind[2] + "-" + datetofind[1] + "-" + datetofind[0],
+                url: '/api/getvisitbydate/' + response.docs.name + "/" + response.docs.lastname + "/" + datetofind[2] + "-" + datetofind[0] + "-" + datetofind[1],
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) { 

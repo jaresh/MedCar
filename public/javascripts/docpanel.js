@@ -6,12 +6,15 @@ $(document).ready(function() {
 
   function HideAll(){
     $("#myvisits").hide();
+    $("#myvisitshistory").hide();
     $("#userinfocontener").hide();
   }
 
   HideAll();
 
   $("#visits").click(function(e){
+
+      var today = new Date();
       e.preventDefault();
       $.ajax({
         url: '/api/docvisits/' + $("#visits").attr("data-name") + '/'+ $("#visits").attr("data-lastname"),
@@ -21,6 +24,11 @@ $(document).ready(function() {
           $("#docvisitstable").empty();
           var htmltoadd = "<tr><th>Pacjent</th><th>Godzina</th><th>Dzień</th><th>Akcje</th></tr>";
           $.each(response.visits, function(key, value) {
+
+
+              var todaycompare  = new Date(value.day);
+
+              if(today <= todaycompare)
               htmltoadd = htmltoadd +
                 "<tr>"+
                   "<th>"+ value.patient +"</th>"+
@@ -33,6 +41,41 @@ $(document).ready(function() {
           $("#docvisitstable").append(htmltoadd);
           HideAll();
           $("#myvisits").toggle("slow");
+        },
+        error: function() {
+        },
+      });
+  });
+
+ $("#visitshistory").click(function(e){
+
+      var today = new Date();
+      e.preventDefault();
+      $.ajax({
+        url: '/api/docvisits/' + $("#visits").attr("data-name") + '/'+ $("#visits").attr("data-lastname"),
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) { 
+          $("#docvisitshistorytable").empty();
+          var htmltoadd = "<tr><th>Pacjent</th><th>Godzina</th><th>Dzień</th><th>Akcje</th></tr>";
+          $.each(response.visits, function(key, value) {
+
+
+              var todaycompare  = new Date(value.day);
+
+              if(today > todaycompare)
+              htmltoadd = htmltoadd +
+                "<tr>"+
+                  "<th>"+ value.patient +"</th>"+
+                  "<th>"+ value.hour +"</th>"+
+                  "<th>" + value.day + "</th>"+
+                  "<th>  <button class='userinfo' data-value='"+ value.patient + "'>Szczegółowe dane pacjenta</button></th>"+
+                "</tr>";
+          });
+
+          $("#docvisitshistorytable").append(htmltoadd);
+          HideAll();
+          $("#myvisitshistory").toggle("slow");
         },
         error: function() {
         },

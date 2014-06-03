@@ -11,10 +11,17 @@
 	<div id="content">
 
 		<div id="userpanelmenu">
-			<button id="visits" data-name="<%= user.name %>" data-lastname="<%= user.lastname %>">Historia wizyt</button>
+			<button id="visitshistory" data-name="<%= user.name %>" data-lastname="<%= user.lastname %>">Historia wizyt</button>
+			<button id="visits" data-name="<%= user.name %>" data-lastname="<%= user.lastname %>">Przyszłe wizyty</button>
 			<button id="docshow">Umów wizytę</button>
 		</div>
 		
+		<div id="myvisitshistory" style="margin-top: 30px;">
+			<table id="uservisitshistorytable">
+
+			</table>
+		</div>
+
 		<div id="myvisits" style="margin-top: 30px;">
 			<table id="uservisitstable">
 

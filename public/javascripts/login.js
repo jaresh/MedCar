@@ -4,6 +4,12 @@
 
 $(document).ready(function() {
 
+  $('#infobox').hide();
+
+  $('#logdata').click(function () {
+    $('#infobox').toggle("slow");
+  });
+
 // Login form
 
 	$('#accountselect').bind('change', function () {

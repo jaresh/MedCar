@@ -18,6 +18,7 @@ $(document).ready(function() {
     $(document.getElementById("doclist")).hide();
     $(document.getElementById("userlist")).hide();
     $(document.getElementById("newslist")).hide();
+    $(document.getElementById("newspreview")).hide();
   }
 
 
@@ -158,6 +159,24 @@ $(document).ready(function() {
       NEWS ADD,EDIT,DELETE FORM
   =============================
   */
+
+  $('input[name="title"]').on('keyup change', function() {
+        $("#newspreview").empty();
+        $("#newspreview").append("<h2>" + $('input[name="title"]').val() + "</h2>");
+        $("#newspreview").append($('textarea[name="newscontent"]').val());
+  });
+
+  $('textarea[name="newscontent"]').on('keyup change', function() {
+        $("#newspreview").empty();
+        $("#newspreview").append("<h2>" + $('input[name="title"]').val() + "</h2>");
+        $("#newspreview").append($('textarea[name="newscontent"]').val());
+  });
+
+  $("#newspreviewbutton").click(function (e) {
+    
+    $("#newspreview").toggle("slow");
+    
+  });
 
   //News add
 

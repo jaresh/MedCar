@@ -94,4 +94,25 @@ module.exports = function(app, passport) {
 			res.redirect("/");
 	});
 
+// visit delete
+
+	app.get('/api/visitdelete/:doc/:patient/:day/:hour',function(req, res) {
+		if(req.user)
+		{
+			if(req.user.type == "user")
+			{
+				Visit.findOne({ doc: req.params.doc,patient: req.params.patient,day: req.params.day,hour: req.params.hour, },function(err, docs){  
+            		docs.remove(); 
+				});  
+
+				res.redirect("/userpanel");
+			}
+				
+			else
+			res.redirect("/");
+		}
+		else
+			res.redirect("/");
+	});
+
 };

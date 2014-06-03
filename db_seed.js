@@ -7,6 +7,7 @@ var User = require('./app/models/user');
 var Admin = require('./app/models/admin');
 var Doc = require('./app/models/doc');
 var Visit = require('./app/models/visit');
+var News = require('./app/models/news');
 
 //User admin
 var newAdmin = new Admin();
@@ -126,12 +127,68 @@ newVisit.save(function(err) {
 		throw err;
 });
 
-Doc.find(function (err, doc){
-	console.log(doc);
+var newVisit = new Visit();
+
+newVisit.doc = "Joanna Nowak";
+newVisit.patient = "Jacek Sikora";
+newVisit.hour = "10:00";
+newVisit.day = "2014-06-09";
+
+newVisit.save(function(err) {
+	if (err)
+		throw err;
 });
 
-Visit.find({patient: "Jacek Sikora"}, function (err, doc){
-	console.log(doc);
+var newVisit = new Visit();
+
+newVisit.doc = "Jan Potocki";
+newVisit.patient = "Jacek Sikora";
+newVisit.hour = "13:00";
+newVisit.day = "2014-06-09";
+
+newVisit.save(function(err) {
+	if (err)
+		throw err;
+});
+
+var newVisit = new Visit();
+
+newVisit.doc = "Jan Potocki";
+newVisit.patient = "Jacek Sikora";
+newVisit.hour = "13:00";
+newVisit.day = "2014-03-22";
+
+newVisit.save(function(err) {
+	if (err)
+		throw err;
+});
+
+var newNews = new News();
+
+newNews.title = "Witamy w MedCar. Oto tytuł ogłoszenia.";
+newNews.content = "<span style='font-family:Cursive;font-size:14px;font-style:normal;font-weight:normal;text-decoration:none;text-transform:none;color:000000;'>Można pisać sam tekst</span>Lub dodawać tagi HTML.";
+newNews.number = "1";
+newNews.date = "2014-03-22";
+
+newNews.save(function(err) {
+	if (err)
+		throw err;
+});
+
+var newNews = new News();
+
+newNews.title = "Informacje";
+newNews.content = "<h2 style='font-family:Cursive; color:red;'>Konta</h2><p>Administrator ma możliwość przeglądania,dodawania,edycji i usuwania pacjentów, lekarzy oraz ogłoszeń.</p>"+
+"<p>Nie ma on wpływu na wizyty u lekarza.</p>" + 
+"<p>Lekarz może przejrzeć historię wizyt oraz sprawdzić nadchodzące wizyty.</p>"+
+"<p>Pacjent może sprawdzić historię wizyt, umówić się na wizytę TYLKO w godzinach i dniach pracy lekarza."+
+"Może odmówić wizytę jeżeli jeszcze się nie odbyła.</p>";
+newNews.number = "2";
+newNews.date = "2014-06-03";
+
+newNews.save(function(err) {
+	if (err)
+		throw err;
 });
 
 console.log("Added db sample data.");

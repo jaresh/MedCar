@@ -13,8 +13,8 @@ $(document).ready(function() {
             var htmltoadd = "";
             $.each(response.docs, function(key,value) {
 
-                htmltoadd = htmltoadd + "<h2>"+ value.title +"</h2>" + "<p>"+ value.date + "</p><br>" + value.content +"</p><hr>";
-
+                htmltoadd = htmltoadd + "<div class='newsonindex'>" + "<h2>"+ value.title +"</h2>" + 
+                                        "<p>"+ value.date + "</p><br>" + value.content +"</p><hr>" + "</div>";
             });
             $("#content").append(htmltoadd);
           },

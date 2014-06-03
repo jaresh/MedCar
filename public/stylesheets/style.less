@@ -6,7 +6,7 @@
 
  */
 
-@background:#EEC853;
+@background:#C7C7C7;
 
 .border-radius (@radius: 5px) {
     -webkit-border-radius: @radius;
@@ -84,7 +84,7 @@ hr{
 textarea{
 	.border-radius(20px);
 	padding:10px;
-	border: 2px solid black;
+	border: 1px solid black;
 }
 
 input[type="text"],input[type="password"],input[type="date"],input[type="number"]{
@@ -92,10 +92,14 @@ input[type="text"],input[type="password"],input[type="date"],input[type="number"
 	.border-radius(20px);
 	padding:5px;
 	text-align: center;
-	border: 2px solid black;
+	border: 1px solid black;
 }
 
 textarea:focus{
+	outline: none;
+}
+
+button:focus{
 	outline: none;
 }
 
@@ -152,7 +156,7 @@ th{
 	width: 650px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: -4px;
+	margin-bottom: -2px;
   	
   	button{
   		color: black;
@@ -160,8 +164,7 @@ th{
 		margin-left: 30px;
 		padding: 10px;
 		font-size: 20px;
-		border: 2px solid black;
-		border-bottom: 2px solid black;
+		border: none;
 		background-color: white;
 		.border-radius-menu(20px, 20px, 0px, 0px);
 		font-family: 'Raleway', sans-serif, "Myriad Pro", Myriad, "Liberation Sans", "Nimbus Sans L", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -169,14 +172,12 @@ th{
   	}
   	button:hover{
 
-		border-bottom: 2px solid @background;
 		background-color: @background;
   	}
 }
 
 #content{
 	padding: 15px;
-	border: 2px solid;
 	background-color: @background;
 	min-height:400px;
 	min-width:600px;
@@ -188,6 +189,45 @@ th{
 	.shadowbox();
 }
 
+#infobox{
+	position:absolute;
+	top:90px;
+	left:68%;
+	width:200px;
+	padding-top:25px;
+	padding-bottom:25px;
+	text-align: center;
+	margin-top: 10px;
+	font-size: 13px;
+	background-color: white;
+	.border-radius(20px);
+	.shadowbox();
+}
+
+.newsonindex{
+
+	padding-left: 60px;
+	padding-right: 60px;
+	padding-top: 30px;
+}
+
+#newspreview{
+	position:fixed;
+	top:30px;
+	left:50px;
+	border: 1px solid;
+	width: 740px;
+	padding-left: 60px;
+	padding-right: 60px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin: 0px auto;
+	margin-top: 10px;
+	background-color: white;
+	.border-radius(20px);
+	.shadowbox();
+}
+
 #loginform{
 	width: 300px;
 	height: 400px;
@@ -195,7 +235,7 @@ th{
 	text-align: center;
 	margin-top: 10px;
 	padding: 25px;
-	background-color: white;
+	background-color: #C7C7C7;
 	.border-radius(20px);
 	.shadowbox();
 
@@ -214,12 +254,11 @@ th{
 	position: absolute;
 	top: 10px;
 	right: 40px;
-	border: 2px solid black;
 	padding: 10px;
 	text-align: center;
 	.border-radius(20px);
 	.shadowbox();
-	background-color:white;
+	background-color:#c7c7c7;;
 
 	a{
 		color:black;
@@ -285,23 +324,8 @@ div[data-status="error"]{
 	text-align: center;
 }
 
-#doctable{
-	width:100%;
-}
-
-#usertable{
-	width:100%;
-}
-
-#uservisitstable{
-	width:100%;
-}
-
-#docvisitstable{
-	width:100%;
-}
-
-#newstable{
+#docvisitshistorytable, #docvisitstable, #uservisitshistorytable, #uservisitstable,
+#usertable, #doctable, #newstable{
 	width:100%;
 }
 

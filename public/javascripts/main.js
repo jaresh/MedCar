@@ -26,7 +26,7 @@ $(document).ready(function() {
         {
             $(errorel).text("Nieprawidłowy znak.");
             $(errorel).attr("data-status","error");
-            $(errorel).prev().css("background-color","#FFCCCC");
+            $(errorel).prev().css("background-color","rgb(245, 76, 76)");
         }
         else
         {
@@ -44,7 +44,7 @@ $(document).ready(function() {
                             {
                                 $(errorel).text("Podany login juz istnieje.");
                                 $(errorel).attr("data-status","error");
-                                $(errorel).prev().css("background-color","#FFCCCC");
+                                $(errorel).prev().css("background-color","rgb(245, 76, 76)");
                             }
                             else
                             {  
@@ -74,7 +74,7 @@ $(document).ready(function() {
         {
             $(errorel).text("Pesel musi zawierać 11 cyfr.");
             $(errorel).attr("data-status","error");
-            $(errorel).prev().css("background-color","#FFCCCC");
+            $(errorel).prev().css("background-color","rgb(245, 76, 76)");
         }
         else
         {
@@ -88,7 +88,7 @@ $(document).ready(function() {
                     {
                         $(errorel).text("Podany pesel juz istnieje.");
                         $(errorel).attr("data-status","error");
-                        $(errorel).prev().css("background-color","#FFCCCC");
+                        $(errorel).prev().css("background-color","rgb(245, 76, 76)");
                     }
                     else
                     {  
@@ -111,7 +111,7 @@ $(document).ready(function() {
         {
             $(errorel).text("Neprawidłowy znak. Jeżeli nie dotyczy wpisz '-'.");
             $(errorel).attr("data-status","error");
-            $(errorel).prev().css("background-color","#FFCCCC");
+            $(errorel).prev().css("background-color","rgb(245, 76, 76)");
         }
         else
         {
@@ -127,7 +127,7 @@ $(document).ready(function() {
         {
             $(errorel).text("Neprawidłowy znak.");
             $(errorel).attr("data-status","error");
-            $(errorel).prev().css("background-color","#FFCCCC");
+            $(errorel).prev().css("background-color","rgb(245, 76, 76)");
         }
         else
         {
@@ -147,8 +147,7 @@ $(document).ready(function() {
             link[link.length-1] = "mainlink";
 
         if ($(this).attr("id") == link[link.length-1]) {
-            $(this).css("border-bottom"," 2px solid #EEC853");
-            $(this).css("background-color","#EEC853");
+            $(this).css("background-color","#C7C7C7");
         }
     });
 
