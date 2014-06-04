@@ -1,4 +1,5 @@
 ### MedCar
+=====================
 
 Aplikacja przychodni online w Node.js
 
@@ -6,21 +7,24 @@ Aplikacja przychodni online w Node.js
 
 1) Klonujemy repozytorium:
 
-git@github.com:jaresh/MedCar.git
+    git clone git@github.com:jaresh/MedCar.git
 
 
 2) Pobieramy depy:
 
-npm install
+    npm install
 
 3) Uruchamiamy skrypt który doda nam przykładowe dane do bazy MONGO:
 
-node db_seed.js
-
--- skrypt uruchamiamy po to aby uzyskać dostęp do konta administratora który może praktycznie wszystko.
+    node db_seed.js 
+    
+    // skrypt uruchamiamy po to aby uzyskać dostęp do kont, 
+    // miedzy innymi, administratora który może praktycznie wszystko.
 
 4) Uruchamiamy serwer:
 
-node server.js
-
--- po wpisaniu w przegladarke http://localhost:3000/ aplikacja się uruchomi
+    node server.js
+    
+    // po wpisaniu w przegladarke http://localhost:3000/ aplikacja się uruchomi
+    
+    
