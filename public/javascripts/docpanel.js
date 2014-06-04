@@ -10,7 +10,17 @@ $(document).ready(function() {
     $("#userinfocontener").hide();
   }
 
+  $("#infohide").click(function () {
+      
+      $("#userinfocontener").toggle("slow");
+      
+  });
+
   HideAll();
+
+//===============
+// DOC VISITS
+//===============
 
   $("#visits").click(function(e){
 
@@ -47,6 +57,10 @@ $(document).ready(function() {
       });
   });
 
+//===================
+// DOC VISITS HISTORY
+//===================
+
  $("#visitshistory").click(function(e){
 
       var today = new Date();
@@ -82,6 +96,10 @@ $(document).ready(function() {
       });
   });
 
+//===============
+// USER INFO
+//===============
+
  $('body').on("click", ".userinfo", function (e){
       e.preventDefault();
       $.ajax({
@@ -89,8 +107,8 @@ $(document).ready(function() {
         type: 'GET',
         dataType: 'json',
         success: function(response) { 
-          $("#userinfocontener").empty();
-          $("#userinfocontener").append(
+          $("#infotext").empty();
+          $("#infotext").append(
          "<p><strong>Imię</strong>: " + response.docs.name + "<br>"+
           "<strong>Drugie imię</strong>: " + response.docs.secondname + "<br>"+
           "<strong>Nazwisko</strong>: " + response.docs.lastname + "<br>"+

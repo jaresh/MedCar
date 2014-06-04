@@ -119,7 +119,7 @@ var newVisit = new Visit();
 
 newVisit.doc = "Joanna Nowak";
 newVisit.patient = "Jacek Sikora";
-newVisit.hour = "16:20";
+newVisit.hour = "16:15";
 newVisit.day = "2014-03-22";
 
 newVisit.save(function(err) {
@@ -143,7 +143,7 @@ var newVisit = new Visit();
 
 newVisit.doc = "Jan Potocki";
 newVisit.patient = "Jacek Sikora";
-newVisit.hour = "13:00";
+newVisit.hour = "13:15";
 newVisit.day = "2014-06-09";
 
 newVisit.save(function(err) {

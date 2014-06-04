@@ -127,7 +127,7 @@ module.exports = function(app, passport) {
 
 				newDoc.save(function(err) {
 					if (err)
-						throw err;
+						console.log(err);
 				});
 
 				res.redirect("/adminpanel");
@@ -248,7 +248,7 @@ module.exports = function(app, passport) {
 
 					docs.save(function(err) {
 						if (err)
-							throw err;
+							console.log(err);
 					});
 
 				});  

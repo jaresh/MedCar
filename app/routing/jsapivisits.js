@@ -81,7 +81,7 @@ module.exports = function(app, passport) {
 
 				newVisit.save(function(err) {
 					if (err)
-						throw err;
+						console.log(err);
 				});
 
 				res.redirect("/userpanel");

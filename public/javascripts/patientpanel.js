@@ -19,6 +19,16 @@ function HideAll(){
     $(document.getElementById("visithours")).hide();
   }
 
+// Hours selector validation
+
+  $('#uservisitaddform').on('change','select[name="visithour"]', function() {
+      if($(this).val() == "-")
+        $('button[type="submit"]').attr("disabled", true);
+      else
+        $('button[type="submit"]').attr("disabled", false);
+
+  });
+
   function DocList(e){
     e.preventDefault();
       $.ajax({
@@ -80,10 +90,11 @@ function HideAll(){
       });
   }
 
+//=========================
+// ====== USER VISITS
+//=========================
 
-  HideAll();
-
-  $("#visits").click(function(e){
+  function VisitsShow(e){
       e.preventDefault();
       
       var today = new Date();
@@ -112,7 +123,22 @@ function HideAll(){
         error: function() {
         },
       });
+  }
+
+
+  HideAll();
+
+  $("#visits").click(function(e){
+
+    HideAll();
+
+    VisitsShow(e);
+      
   });
+
+//=========================
+// ====== USER VISIT History
+//=========================
 
   $("#visitshistory").click(function(e){
       e.preventDefault();
@@ -143,20 +169,31 @@ function HideAll(){
       });
   });
 
+//=========================
+// ======== USER DELETE VISIT
+//=========================
+
   $('body').on("click", ".visitdeletebtn", function (e){
+    if (confirm("Jesteś pewny?")) {
       e.preventDefault();
       $.ajax({
         url: '/api/visitdelete/' + $(this).attr("data-doc") + "/" + $(this).attr("data-patient") + "/" + $(this).attr("data-day") + "/" + $(this).attr("data-hour"),
         type: 'GET',
         success: function() { 
           HideAll();
-          NewsListadmin(e);
+          VisitsShow(e);
         },
         error: function(ErrorText) {
           console.log(ErrorText);
         },
       });
+    }
+    return false;
   });
+
+//=========================
+// ======== USER ADD VISIT
+//=========================
 
   $('body').on("click", ".docvisitbtn", function (e){
       $('button[type="submit"]').attr("disabled", true);
@@ -340,11 +377,9 @@ function HideAll(){
                   {
                     htmltoadd = htmltoadd + 
                     "<option value='" + i + ':' + '00' + "'>" + i + ':' + '00' + "</option>"+
-                    "<option value='" + i + ':' + '10' + "'>" + i + ':' + '10' + "</option>"+
-                    "<option value='" + i + ':' + '20' + "'>" + i + ':' + '20' + "</option>"+
+                    "<option value='" + i + ':' + '15' + "'>" + i + ':' + '15' + "</option>"+
                     "<option value='" + i + ':' + '30' + "'>" + i + ':' + '30' + "</option>"+
-                    "<option value='" + i + ':' + '40' + "'>" + i + ':' + '40' + "</option>"+
-                    "<option value='" + i + ':' + '50' + "'>" + i + ':' + '50' + "</option>";
+                    "<option value='" + i + ':' + '45' + "'>" + i + ':' + '45' + "</option>";
                   }
 
                   $("#visithour").append(htmltoadd);

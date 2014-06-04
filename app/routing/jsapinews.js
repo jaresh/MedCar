@@ -98,7 +98,7 @@ module.exports = function(app, passport) {
 
 				newNews.save(function(err) {
 					if (err)
-						throw err;
+						console.log(err);
 				});
 
 				res.redirect("/adminpanel");
@@ -162,7 +162,7 @@ module.exports = function(app, passport) {
           
           			docs.save(function(err) {
 						if (err)
-							throw err;
+							console.log(err);
 					});
 				});  
 

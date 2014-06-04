@@ -76,18 +76,18 @@ module.exports = function(app, passport) {
 			{
 				var newUser = new User();
 
-				newUser.login = req.body.loginuser;
-				newUser.password = newUser.generateHash(req.body.passworduser);
+				newUser.login = req.body.login;
+				newUser.password = newUser.generateHash(req.body.password);
 				newUser.type = 'user';
-				newUser.name = req.body.nameuser;
-				newUser.secondname = req.body.secondnameuser;
-				newUser.lastname = req.body.lastnameuser;
+				newUser.name = req.body.name;
+				newUser.secondname = req.body.secondname;
+				newUser.lastname = req.body.lastname;
 				newUser.pesel = req.body.pesel;
 				newUser.dateofbirth = req.body.dateofbirth;
 
 				newUser.save(function(err) {
 					if (err)
-						throw err;
+						console.log(err);
 				});
 
 				res.redirect("/adminpanel");
@@ -132,21 +132,25 @@ module.exports = function(app, passport) {
 
 					var newUser = new User();
 
-					if(req.body.loginuser)
-						docs.login = req.body.loginuser;
+					if(req.body.login)
+					{
+						console.log("Zmieniłem login")
+						docs.login = req.body.login;
+					}
 					
-					if(req.body.passworduser)
-					  	docs.password = newUser.generateHash(req.body.passworduser);
+					if(req.body.password)
+					  	docs.password = newUser.generateHash(req.body.password);
+
 					docs.type = 'user';
-					docs.name = req.body.nameuser;
-					docs.secondname = req.body.secondnameuser;
-					docs.lastname = req.body.lastnameuser;
+					docs.name = req.body.name;
+					docs.secondname = req.body.secondname;
+					docs.lastname = req.body.lastname;
 					docs.pesel = req.body.pesel;
 					docs.dateofbirth = req.body.dateofbirth;
           
           			docs.save(function(err) {
 						if (err)
-							throw err;
+							console.log(err);
 					});
 				});  
 
