@@ -18,13 +18,15 @@ Aplikacja przychodni online w Node.js
 
     node db_seed.js 
     
-    // skrypt uruchamiamy po to aby uzyskać dostęp do kont, 
+    // Skrypt uruchamiamy po to aby uzyskać dostęp do kont, 
     // miedzy innymi, administratora który może praktycznie wszystko.
+    // Obok formularza logowania, pod przyciskiem "Dane do logowania"
+    // znajduje się ściąga z loginami i hasłami.
 
 4) Uruchamiamy serwer:
 
     node server.js
     
-    // po wpisaniu w przegladarke http://localhost:3000/ aplikacja się uruchomi
+    // Po wpisaniu w przegladarke http://localhost:3000/ aplikacja się uruchomi
     
     
