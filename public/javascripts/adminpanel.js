@@ -909,18 +909,17 @@ $(document).ready(function() {
       type: 'GET',
       success: function(response) { 
 
-        document.getElementById("formcontener").innerHTML = 
-    '<h2> Formularz pacjenta </h2>'+
+         var htmltoadd = '<h2> Formularz pacjenta </h2>'+
       '<form action="/api/useredit/' + response.docs.pesel + '" method="post">'+
 
         '<div style="margin-bottom:20px;">'+
           '<label>Login do panelu</label>'+
-          '<input type="text" name="login">'+
+          '<input type="text" name="login" value="" placeholder="" autocomplete="off" />'+
           '<div id="loginerror" data-status="good"></div>'+
         '</div>'+
         '<div style="margin-bottom:20px;">'+
           '<label>Hasło do panelu</label>'+
-          '<input type="password" name="password">'+
+          '<input type="password" name="password" value="" placeholder="" autocomplete="off" />'+
           '<div id="passworderror" data-status="good"></div>'+
         '</div>'+
         '<div style="margin-bottom:20px;">'+
@@ -954,6 +953,7 @@ $(document).ready(function() {
 
       '</form>';
 
+        $('#formcontener').html(htmltoadd);
 
         $('#date').datepicker({
           buttonImage: '/images/images.png',
@@ -975,6 +975,7 @@ $(document).ready(function() {
             $("#currentdate").val(datetofind[2] + "-" + datetofind[1] + "-" + datetofind[0]);
           }
         });
+
 
         $('button[type="submit"]').attr("disabled", false);
         $(document.getElementById("formcontener")).css("width","400px");

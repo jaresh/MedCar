@@ -2,30 +2,9 @@
 /*global $:false */
 /*global key:false */
 // checked with jshint
-$(document).ready(function() {
-
-  function HideAll(){
-    $("#myvisits").hide();
-    $("#myvisitshistory").hide();
-    $("#userinfocontener").hide();
-  }
-
-  $("#infohide").click(function () {
-      
-      $("#userinfocontener").toggle("slow");
-      
-  });
-
-  HideAll();
-
-//===============
-// DOC VISITS
-//===============
-
-  $("#visits").click(function(e){
-
+setInterval(function(){
       var today = new Date();
-      e.preventDefault();
+      console.log("Pobieram dane");
       $.ajax({
         url: '/api/docvisits/' + $("#visits").attr("data-name") + '/'+ $("#visits").attr("data-lastname"),
         type: 'GET',
@@ -49,12 +28,37 @@ $(document).ready(function() {
           });
 
           $("#docvisitstable").append(htmltoadd);
-          HideAll();
-          $("#myvisits").toggle("slow");
         },
         error: function() {
         },
       });
+}, 5000);
+
+
+$(document).ready(function() {
+
+  function HideAll(){
+    $("#myvisits").hide();
+    $("#myvisitshistory").hide();
+    $("#userinfocontener").hide();
+  }
+
+  $("#infohide").click(function () {
+      
+      $("#userinfocontener").toggle("slow");
+      
+  });
+
+  HideAll();
+
+//===============
+// DOC VISITS
+//===============
+
+  $("#visits").click(function(e){
+
+                HideAll();
+          $("#myvisits").toggle("slow");
   });
 
 //===================

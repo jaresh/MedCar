@@ -2,6 +2,33 @@
 /*global $:false */
 /*global key:false */
 // checked with jshint
+setInterval(function(){
+  var today = new Date();
+
+      $.ajax({
+        url: '/api/uservisits/' + $("#visitshistory").attr("data-name") + '/'+ $("#visitshistory").attr("data-lastname"),
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) { 
+          $("#uservisitstable").empty();
+          var htmltoadd = "<tr><th>Lekarz</th><th>Godzina</th><th>Dzień</th><th>Akcje</th></tr>";
+          $.each(response.visits, function(key, value) {
+
+              var todaycompare  = new Date(value.day);
+
+              if(today < todaycompare)
+                htmltoadd = htmltoadd + "<tr>"+"<th>"+ value.doc +"</th>"+"<th>"+ value.hour +"</th>"+"<th>" + 
+                value.day + "</th>"+"<th><button class='visitdeletebtn' data-doc='"+ 
+                value.doc + "' data-patient='" + value.patient + "' data-day='" + value.day + "' data-hour='" + value.hour + "'>Odmów wizytę</button></th>"+"</tr>";
+          });
+
+          $("#uservisitstable").append(htmltoadd);
+          
+        },
+        error: function() {
+        },
+      });
+}, 5000);
 
 $(document).ready(function() {
 
@@ -94,45 +121,13 @@ function HideAll(){
 // ====== USER VISITS
 //=========================
 
-  function VisitsShow(e){
-      e.preventDefault();
-      
-      var today = new Date();
-
-      $.ajax({
-        url: '/api/uservisits/' + $("#visitshistory").attr("data-name") + '/'+ $("#visitshistory").attr("data-lastname"),
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) { 
-          $("#uservisitstable").empty();
-          var htmltoadd = "<tr><th>Lekarz</th><th>Godzina</th><th>Dzień</th><th>Akcje</th></tr>";
-          $.each(response.visits, function(key, value) {
-
-              var todaycompare  = new Date(value.day);
-
-              if(today < todaycompare)
-                htmltoadd = htmltoadd + "<tr>"+"<th>"+ value.doc +"</th>"+"<th>"+ value.hour +"</th>"+"<th>" + 
-                value.day + "</th>"+"<th><button class='visitdeletebtn' data-doc='"+ 
-                value.doc + "' data-patient='" + value.patient + "' data-day='" + value.day + "' data-hour='" + value.hour + "'>Odmów wizytę</button></th>"+"</tr>";
-          });
-
-          $("#uservisitstable").append(htmltoadd);
-          HideAll();
-          $(document.getElementById("myvisits")).toggle("slow");
-        },
-        error: function() {
-        },
-      });
-  }
-
 
   HideAll();
 
   $("#visits").click(function(e){
 
     HideAll();
-
-    VisitsShow(e);
+    $(document.getElementById("myvisits")).toggle("slow");
       
   });
 
@@ -181,7 +176,7 @@ function HideAll(){
         type: 'GET',
         success: function() { 
           HideAll();
-          VisitsShow(e);
+          $(document.getElementById("myvisits")).toggle("slow");
         },
         error: function(ErrorText) {
           console.log(ErrorText);
