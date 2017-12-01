@@ -6,7 +6,7 @@
   "description": "",
   "dependencies" : {
     "express": "~4.2.0",		
-    "ejs" : "~0.8.5", 				
+    "ejs" : "~2.5.5", 				
     "mongoose": "^3.8.9",			
     "passport" : "~0.1.17", 	
     "connect": "^2.14.5",	
